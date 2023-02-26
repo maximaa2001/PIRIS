@@ -1,0 +1,11 @@
+.wrapper{
+    display: flex;
+    gap: 50px;
+}
+
+.link{
+    text-decoration: none;
+    color: white;
+    font-size: 21px;
+    letter-spacing: 1px;
+}

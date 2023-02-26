@@ -1,0 +1,71 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.date {
+    margin-bottom: 10px;
+    display: flex;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+.date label {
+    font-size: 21px;
+}
+
+.number {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid gray; 
+    background-color: white;
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.selectorDiv {
+    display: flex;
+    width: 100%;
+    gap: 200px;
+    align-items: center;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.selectorDiv  label{
+   width: 200px;
+   text-align: left;
+}
+
+.selector{
+    width: 300px;
+}
+
+.checkboxDiv {
+    display: flex;
+    width: 100%;
+    gap: 200px;
+    align-items: center;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.checkboxDiv  label{
+    width: 200px;
+    text-align: left;
+}
+
+input[type=checkbox]
+{
+  -ms-transform: scale(1.5); /* IE */
+  -moz-transform: scale(1.5); /* FF */
+  -webkit-transform: scale(1.5); /* Safari and Chrome */
+  -o-transform: scale(1.5); /* Opera */
+  transform: scale(1.5);
+  padding: 10px;
+}
+
+
