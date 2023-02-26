@@ -7,36 +7,57 @@ import MaskedInput from 'react-text-mask'
 import Select from 'react-select';
 import { getRefs } from '../../../service/ApiService';
 import { ICity, IDisability, IFamilyStatus, INationality } from '../../../model/model';
+import { useFormilCreateClient } from '../../../hooks/useFormikCreateClient';
+import { ICreateClientData } from "../../../model/model"
 
 export const AddClientForm = () => {
-    const [surname, setSurname] = useState(null);
-    const [name, setName] = useState(null);
-    const [lastname, setLastName] = useState(null);
-    const [birthDay, setBirthDay] = useState(null);
-    const [partPassport, setPartPassport] = useState(null);
-    const [numberPassport, setNumberPassport] = useState(null);
-    const [sourcePassport, setSourcePassport] = useState(null);
-    const [startDatePassport, setStartDatePassport] = useState(null);
-    const [identidierNumber, setIdentifierNumber] = useState(null);
-    const [placeBirth, setPlaceBirth] = useState(null);
-    const [cityLive, setCityLive] = useState(null);
-    const [address, setAdress] = useState(null);
-    const [homePhone, setHomePhone] = useState(null);
-    const [mobilePhone, setMobilePhone] = useState(null);
-    const [email, setEmail] = useState(null);
-    const [work, setWork] = useState(null);
-    const [position, setPosition] = useState(null);
-    const [cityRegistration, setCityRegistration] = useState(null);
-    const [familyStatus, setFamilyStatus] = useState(null);
-    const [nationality, setNationality] = useState(null);
-    const [disability, setDisability] = useState(null);
-    const [isPensioner, setIsPensioner] = useState(false);
-    const [salaryMonth, setSalaryMonth] = useState(null);
+
+    const [data, setData] = useState({
+        surname : null,
+        name : null,
+        lastname : null,
+        birthDay : new Date(),
+        partPassport: null,
+        numberPassport : null,
+        sourcePassport : null,
+        startDatePassport : new Date(),
+        identidierNumber : null,
+        placeBirth : null,
+        cityLive : -1,
+        address : null,
+        homePhone : null,
+        mobilePhone  : null,
+        email : null,
+        work : null,
+        position  : null,
+        cityRegistration : -1,
+        familyStatus : -1,
+        nationality : -1,
+        disability : -1,
+        isPensioner : false,
+        salaryMonth : null
+    })
 
     const [allCities, setAllCities] = useState([]);
     const [allFalimyStatuses, setAllFamilyStatuses] = useState([]);
     const [allNationalities, setAllNationalities] = useState([]);
     const [allDisabilities, setAllDisaboloties] = useState([]);
+
+    const {
+        touched,
+        handleSubmit,
+        errors,
+        values,
+        handleChange,
+        handleBlur,
+        isValid,
+        // dirty,
+    } = useFormilCreateClient(data)
+
+    console.log(errors)
+ 
+    
+
 
     useEffect(() => {
         getRefs().then(item => {
@@ -68,113 +89,109 @@ export const AddClientForm = () => {
         })
     }, [])
 
-    console.log(allCities)
-    console.log("new" + allCities.map(function(entry) {
-        return entry.name;
-    }))
+
 
     const submitHandler = (e : React.FormEvent) => {
         e.preventDefault();
+        handleSubmit()
     }
 
     return(
         <form onSubmit={submitHandler}>
             <div className={s.container}>
-                <Input placeholder='фамилия' onChange={e => setSurname(e.target.value)}/>
-                <Input placeholder='имя' onChange={e => setName(e.target.value)}/>
-                <Input placeholder='отчество' onChange={e => setLastName(e.target.value)}/>
+                <Input placeholder='фамилия' onChange={e => setData(prev => ({...prev, surname: e.target.value}))}/>
+                <Input placeholder='имя' onChange={e => setData(prev => ({...prev, name: e.target.value}))}/>
+                <Input placeholder='отчество' onChange={e => setData(prev => ({...prev, lastname: e.target.value}))}/>
                 <div className={s.date}>
                    <label>дата рождения</label>
-                    <DatePicker class={s.date} selected={birthDay} onChange={(date) => setBirthDay(date)} />
+                    <DatePicker class={s.date} selected={data.birthDay} onChange={(date) => setData(prev => ({...prev, birthDay: date}))} />
                 </div>
-                <Input placeholder='серия паспорта' onChange={e => setPartPassport(e.target.value)}/>
+                <Input placeholder='серия паспорта' onChange={e => setData(prev => ({...prev, partPassport: e.target.value}))}/>
                 <MaskedInput
                         mask={[/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/]}
                         className={s.number}
                         guide={false}
                         placeholder="номер паспорта"
-                        onChange={(e) => setNumberPassport(e.target.value)}
+                        onChange={(e) => setData(prev => ({ ...prev,   numberPassport : e.target.value   }))}
                 />
-                <Input placeholder='кем выдан пасспорт' onChange={setSourcePassport}/>
+                <Input placeholder='кем выдан пасспорт' onChange={e => setData(prev => ({...prev, sourcePassport: e.target.value}))}/>
                 <div className={s.date}>
                     <label>дата выдачи пасспорта</label>
-                    <DatePicker class={s.date} selected={birthDay} onChange={(date) => setStartDatePassport(date)}/>
+                    <DatePicker class={s.date} selected={data.startDatePassport} onChange={(date) => setData(prev => ({...prev, startDatePassport: date}))}/>
                 </div>
                 <MaskedInput
                         mask={[/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/[A-Z]/,/\d/,/\d/,/\d/,/[A-Z]/,/[A-Z]/, /\d/]}
                         className={s.number}
                         guide={true}
                         placeholder="идентификационнный номер"
-                        onChange={(e) =>  setIdentifierNumber(e.target.value)}
+                        onChange={e => setData(prev => ({...prev, identidierNumber: e.target.value}))}
                 />
-                 <Input placeholder='место рождения' onChange={e => setPlaceBirth(e.target.value)}/>
+                 <Input placeholder='место рождения' onChange={e => setData(prev => ({...prev, placeBirth: e.target.value}))}/>
                  <div className={s.selectorDiv}>
                     <label>город фактического проживания</label>
                     <Select className={s.selector}
-                    onChange={setCityLive}
+                    onChange={e => setData(prev => ({...prev, placeBirth : e.value}))}
                      options={allCities}
                     />
                  </div>
-                <Input placeholder='адрес фактического проживания' onChange={setAdress}/>
+                <Input placeholder='адрес фактического проживания' onChange={e => setData(prev => ({...prev, address: e.target.value}))}/>
                 <MaskedInput
                         mask={[/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]}
                         className={s.number}
                         guide={true}
                         placeholder="домашний телефон"
-                        onChange={(e) =>  setHomePhone(e.target.value)}
+                        onChange={e => setData(prev => ({...prev, homePhone: e.target.value}))}
                 />
                 <MaskedInput
                         mask={['+','(', 3, 7, 5, ')','-','(',/\d/,/\d/,')', '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/]}
                         className={s.number}
                         guide={true}
                         placeholder="номер телефона"
-                        onChange={(e) =>  setMobilePhone(e.target.value)}
+                        onChange={e => setData(prev => ({...prev, mobilePhone: e.target.value}))}
                 />
-                <Input placeholder='email' onChange={setEmail}/>
-                <Input placeholder='место работы' onChange={setWork}/>
-                <Input placeholder='должность' onChange={setPosition}/>
+                <Input placeholder='email' onChange={e => setData(prev => ({...prev, email: e.target.value}))}/>
+                <Input placeholder='место работы' onChange={e => setData(prev => ({...prev, work: e.target.value}))}/>
+                <Input placeholder='должность' onChange={e => setData(prev => ({...prev, position: e.target.value}))}/>
                 <div className={s.selectorDiv}>
                     <label>город прописки</label>
                     <Select className={s.selector}
-                    onChange={setCityRegistration}
+                    onChange={e => setData(prev => ({...prev, cityRegistration: e.value}))}
                      options={allCities}
                     />
                  </div>
                  <div className={s.selectorDiv}>
                     <label>семейное положение</label>
                     <Select className={s.selector}
-                    onChange={setFamilyStatus}
+                    onChange={e => setData(prev => ({...prev, familyStatus: e.value}))}
                      options={allFalimyStatuses}
                     />
                  </div>
                  <div className={s.selectorDiv}>
                     <label>гражданство</label>
                     <Select className={s.selector}
-                    onChange={setNationality}
+                    onChange={e => setData(prev => ({...prev, nationality: e.value}))}
                      options={allNationalities}
                     />
                  </div>
                  <div className={s.selectorDiv}>
                     <label>инвалидность</label>
                     <Select className={s.selector}
-                    onChange={setDisability}
+                    onChange={e => setData(prev => ({...prev, disability: e.value}))}
                      options={allDisabilities}
                     />
                  </div>
                  <div className={s.checkboxDiv}>
                     <label>пенсионер</label>
-                 <input type="checkbox" onChange={(e) => setIsPensioner(e.target.checked)} checked={isPensioner}/>
+                 <input type="checkbox" onChange={e => setData(prev => ({...prev, isPensioner: e.target.checked}))} checked={data.isPensioner}/>
                  </div>
 
                  <div className={s.checkboxDiv}>
                     <label>ежемесячный доход</label>
-                    <input type="number" min="0.00" max="10000.00" step="0.01" />
+                    <input type="number" min="0.00" max="10000.00" step="0.01" onChange={e => setData(prev => ({...prev, salaryMonth: e.target.value}))}/>
                  </div>
 
                  <button type="submit" className={s.btnSubmit}>Create</button>
-                 
             </div>
-            
         </form>
     )
 }
