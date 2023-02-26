@@ -8,7 +8,7 @@ export const Navbar = () => {
     return(
         <nav className={s.wrapper}>
             {mapNavigationLink.map((item) => (
-                <a href={item[0]} className={s.link}>{item[1]}</a>
+                <a key={item[1]} href={item[0]} className={s.link}>{item[1]}</a>
             ))}
         </nav>
     )

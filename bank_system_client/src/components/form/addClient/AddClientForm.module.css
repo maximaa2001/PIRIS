@@ -58,6 +58,10 @@
     text-align: left;
 }
 
+label{
+    font-size: 21px;
+}
+
 input[type=checkbox]
 {
   -ms-transform: scale(1.5); /* IE */
@@ -66,6 +70,19 @@ input[type=checkbox]
   -o-transform: scale(1.5); /* Opera */
   transform: scale(1.5);
   padding: 10px;
+}
+
+.btnSubmit{
+    height: 50px;
+    cursor: pointer;
+    font-size: 25px;
+    background-color:  rgb(29,31,30);
+    border-color:  rgb(29,31,30);
+    color: white;
+}
+
+.btnSubmit:hover{
+    background-color: #00A25F;
 }
 
 

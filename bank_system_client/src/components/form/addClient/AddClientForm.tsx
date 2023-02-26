@@ -1,10 +1,12 @@
 import { Input } from '../../input/Input'
 import s from './AddClientForm.module.css'
-import { useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MaskedInput from 'react-text-mask'
 import Select from 'react-select';
+import { getRefs } from '../../../service/ApiService';
+import { ICity, IDisability, IFamilyStatus, INationality } from '../../../model/model';
 
 export const AddClientForm = () => {
     const [surname, setSurname] = useState(null);
@@ -31,18 +33,52 @@ export const AddClientForm = () => {
     const [isPensioner, setIsPensioner] = useState(false);
     const [salaryMonth, setSalaryMonth] = useState(null);
 
-    const [options, setOptions] = useState([
-        { value: 'chocolate', label: 'Chocolate' },
-        { value: 'strawberry', label: 'Strawberry' },
-        { value: 'vanilla', label: 'Vanilla' },
-    ]);
+    const [allCities, setAllCities] = useState([]);
+    const [allFalimyStatuses, setAllFamilyStatuses] = useState([]);
+    const [allNationalities, setAllNationalities] = useState([]);
+    const [allDisabilities, setAllDisaboloties] = useState([]);
 
     useEffect(() => {
-        setOptions(prev => [...prev,   { value: 'chocolate', label: 'Chocolate' }])
+        getRefs().then(item => {
+            setAllCities(item.data.cities.map(function(entry) {
+                return {
+                    label : entry.name,
+                    value : entry.id
+                }
+            }))
+            setAllFamilyStatuses(item.data.familyStatuses.map(function(entry) {
+                return {
+                    label : entry.name,
+                    value : entry.id
+                }
+            }))
+            setAllNationalities(item.data.nationalities.map(function(entry) {
+                return {
+                    label : entry.name,
+                    value : entry.id
+                }
+            }))
+            setAllDisaboloties(item.data.disabilities.map(function(entry) {
+                return {
+                    label : entry.name,
+                    value : entry.id
+                }
+            }))
+            
+        })
     }, [])
 
+    console.log(allCities)
+    console.log("new" + allCities.map(function(entry) {
+        return entry.name;
+    }))
+
+    const submitHandler = (e : React.FormEvent) => {
+        e.preventDefault();
+    }
+
     return(
-        <form>
+        <form onSubmit={submitHandler}>
             <div className={s.container}>
                 <Input placeholder='фамилия' onChange={e => setSurname(e.target.value)}/>
                 <Input placeholder='имя' onChange={e => setName(e.target.value)}/>
@@ -76,7 +112,7 @@ export const AddClientForm = () => {
                     <label>город фактического проживания</label>
                     <Select className={s.selector}
                     onChange={setCityLive}
-                     options={options}
+                     options={allCities}
                     />
                  </div>
                 <Input placeholder='адрес фактического проживания' onChange={setAdress}/>
@@ -101,28 +137,28 @@ export const AddClientForm = () => {
                     <label>город прописки</label>
                     <Select className={s.selector}
                     onChange={setCityRegistration}
-                     options={options}
+                     options={allCities}
                     />
                  </div>
                  <div className={s.selectorDiv}>
                     <label>семейное положение</label>
                     <Select className={s.selector}
                     onChange={setFamilyStatus}
-                     options={options}
+                     options={allFalimyStatuses}
                     />
                  </div>
                  <div className={s.selectorDiv}>
                     <label>гражданство</label>
                     <Select className={s.selector}
                     onChange={setNationality}
-                     options={options}
+                     options={allNationalities}
                     />
                  </div>
                  <div className={s.selectorDiv}>
                     <label>инвалидность</label>
                     <Select className={s.selector}
                     onChange={setDisability}
-                     options={options}
+                     options={allDisabilities}
                     />
                  </div>
                  <div className={s.checkboxDiv}>
@@ -135,7 +171,7 @@ export const AddClientForm = () => {
                     <input type="number" min="0.00" max="10000.00" step="0.01" />
                  </div>
 
-
+                 <button type="submit" className={s.btnSubmit}>Create</button>
                  
             </div>
             

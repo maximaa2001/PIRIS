@@ -19,8 +19,8 @@ export interface INationality {
 }
 
 export interface IRef {
-    cities : ICity;
-    disabilities : IDisability;
-    familyStatuses : IFamilyStatus;
-    nationalities : INationality
+    cities : ICity[];
+    disabilities : IDisability[];
+    familyStatuses : IFamilyStatus[];
+    nationalities : INationality[]
 }
