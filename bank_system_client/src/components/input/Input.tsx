@@ -8,10 +8,11 @@ interface IInput {
     type : string
     name? : string;
     value? : string;
+    checked? : boolean
 }
 
-export const Input : FC<IInput> = ({placeholder, onChange,onBlur, type, name, value, }) => {
+export const Input : FC<IInput> = ({placeholder, onChange,onBlur, type, name, value, checked}) => {
     return(
-        <input type={type} name={name} value={value} onBlur={onBlur} className={s.input} placeholder={placeholder} onChange={onChange}/>
+        <input type={type} checked={checked} name={name} value={value} onBlur={onBlur} className={s.input} placeholder={placeholder} onChange={onChange}/>
     )
 }

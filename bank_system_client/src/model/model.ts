@@ -38,15 +38,15 @@ export interface ICreateClientData {
     placeBirth : string;
     cityLive : number;
     address : string;
-    // homePhone : string;
-    // mobilePhone  : string;
-    // email : string;
-    // work : string;
-    // position  : string;
-    // cityRegistration : number
-    // familyStatus : number;
-    // nationality : number;
-    // disability : number;
-    // isPensioner : boolean;
-    // salaryMonth : string;
+    homePhone : string;
+    mobilePhone  : string;
+    email : string;
+    work : string;
+    position  : string;
+    cityRegistration : number
+    familyStatus : number;
+    nationality : number;
+    disability : number;
+    isPensioner : boolean;
+    salaryMonth : string;
 }

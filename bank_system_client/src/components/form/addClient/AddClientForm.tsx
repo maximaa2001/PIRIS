@@ -19,12 +19,12 @@ export const AddClientForm = () => {
         day = '' + d.getDate(),
         year = d.getFullYear();
 
-    if (month.length < 2) 
-        month = '0' + month;
-    if (day.length < 2) 
-        day = '0' + day;
+        if (month.length < 2) 
+            month = '0' + month;
+        if (day.length < 2) 
+          day = '0' + day;
 
-    return [year, month, day].join('-');
+        return [year, month, day].join('-');
     }
 
     const [data, setData] = useState({
@@ -39,23 +39,19 @@ export const AddClientForm = () => {
         identidierNumber : "",
         placeBirth : "",
         cityLive : -1,
-        address : null,
-        // homePhone : null,
-        // mobilePhone  : null,
-        // email : null,
-        // work : null,
-        // position  : null,
-        // cityRegistration : -1,
-        // familyStatus : -1,
-        // nationality : -1,
-        // disability : -1,
-        // isPensioner : false,
-        // salaryMonth : null
+        address : "",
+        homePhone : "",
+        mobilePhone  : "",
+        email : "",
+        work : "",
+        position  : "",
+        cityRegistration : -1,
+        familyStatus : -1,
+        nationality : -1,
+        disability : -1,
+        isPensioner : false,
+        salaryMonth : ""
     })
-
- 
-
-    
 
 
     const [allCities, setAllCities] = useState([]);
@@ -72,10 +68,7 @@ export const AddClientForm = () => {
         handleBlur,
         isValid,
         // dirty,
-    } = useFormilCreateClient(data)
-
-    
-
+    } = useFormilCreateClient(data)    
 
     useEffect(() => {
         getRefs().then(item => {
@@ -107,9 +100,33 @@ export const AddClientForm = () => {
         })
     }, [])
 
-    console.log(data.cityLive)
 
 
+    const handleCityLiveChange = (selectedCity, values) => {
+        values.cityLive = selectedCity.value;
+        setData(preev => ({...preev, cityLive: selectedCity}));
+    }
+
+    const handleCityRegistrationChange = (selectedCity, values) => {
+        values.cityRegistration = selectedCity.value;
+        setData(preev => ({...preev, cityRegistration: selectedCity}));
+    }
+
+    const handleFamilyStatusChange = (selectedCity, values) => {
+        values.familyStatus = selectedCity.value;
+        setData(preev => ({...preev, familyStatus: selectedCity}));
+    }
+
+    const handleNationatilyChange = (selectedCity, values) => {
+        values.nationality = selectedCity.value;
+        setData(preev => ({...preev, nationality: selectedCity}));
+    }
+
+    const handleDisabilityChange = (selectedCity, values) => {
+        values.disability = selectedCity.value;
+        setData(preev => ({...preev, disability: selectedCity}));
+    }
+    
 
     return(
         <form onSubmit={handleSubmit}>
@@ -142,72 +159,106 @@ export const AddClientForm = () => {
                         onChange={e => handleChange(e)}
                 />
                  <Input type='text' name='placeBirth' value={values.placeBirth} placeholder='место рождения'  onBlur={handleBlur} onChange={e => handleChange(e)}/>
-                 <select name='cityLive' value={values.cityLive} onBlur={handleBlur} onChange={handleChange}>
-                    <option>sf</option>
-                    <option>sf</option>
-                 </select>
-                {/* <div className={s.selectorDiv}>
+                <div className={s.selectorDiv}>
                     <label>город фактического проживания</label>
                     <Select className={s.selector}
-                    onChange={e => setData(prev => ({...prev, placeBirth : e.value}))}
+                    name='cityLive'
+                    value={data.cityLive}
+                    onChange={selectedOption => {
+                        handleCityLiveChange(selectedOption, values);
+                        handleChange("cityLive");
+                    }}
+                     onBlur={handleBlur}
                      options={allCities}
                     />
-                 </div> */}
-                {/* <Input placeholder='адрес фактического проживания' onChange={e => setData(prev => ({...prev, address: e.target.value}))}/>
+                 </div>
+                <Input type='text' name='address' value={values.address} placeholder='адрес фактического проживания' onBlur={handleBlur} onChange={e => handleChange(e)}/>
                 <MaskedInput
                         mask={[/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]}
                         className={s.number}
                         guide={true}
                         placeholder="домашний телефон"
-                        onChange={e => setData(prev => ({...prev, homePhone: e.target.value}))}
+                        name='homePhone'
+                        value={values.homePhone}
+                        onBlur={handleBlur}
+                        onChange={e => handleChange(e)}
                 />
                 <MaskedInput
-                        mask={['+','(', 3, 7, 5, ')','-','(',/\d/,/\d/,')', '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/]}
+                        mask={[ 3, 7, 5,'-',/\d/,/\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/]}
                         className={s.number}
                         guide={true}
                         placeholder="номер телефона"
-                        onChange={e => setData(prev => ({...prev, mobilePhone: e.target.value}))}
+                        name='mobilePhone'
+                        value={values.mobilePhone}
+                        onBlur={handleBlur}
+                        onChange={e => handleChange(e)}
                 />
-                <Input placeholder='email' onChange={e => setData(prev => ({...prev, email: e.target.value}))}/>
-                <Input placeholder='место работы' onChange={e => setData(prev => ({...prev, work: e.target.value}))}/>
-                <Input placeholder='должность' onChange={e => setData(prev => ({...prev, position: e.target.value}))}/>
+               <Input type='text' name='email' value={values.email} placeholder='email' onBlur={handleBlur} onChange={e => handleChange(e)}/>
+                <Input type='text' name='work'  value={values.work} placeholder='место работы' onBlur={handleBlur} onChange={e => handleChange(e)}/>
+                <Input  type='text' name='position' value={values.position} placeholder='должность' onBlur={handleBlur} onChange={e => handleChange(e)}/>
                 <div className={s.selectorDiv}>
                     <label>город прописки</label>
                     <Select className={s.selector}
-                    onChange={e => setData(prev => ({...prev, cityRegistration: e.value}))}
-                     options={allCities}
+                     name='cityRegistration'
+                     value={data.cityRegistration}
+                     onChange={selectedOption => {
+                         handleCityRegistrationChange(selectedOption, values);
+                         handleChange("cityRegistration");
+                     }}
+                      onBlur={handleBlur}
+                      options={allCities}
                     />
                  </div>
                  <div className={s.selectorDiv}>
                     <label>семейное положение</label>
                     <Select className={s.selector}
-                    onChange={e => setData(prev => ({...prev, familyStatus: e.value}))}
-                     options={allFalimyStatuses}
+                     name='familyStatus'
+                     value={data.familyStatus}
+                     onChange={selectedOption => {
+                         handleFamilyStatusChange(selectedOption, values);
+                         handleChange("familyStatus");
+                     }}
+                      onBlur={handleBlur}
+                      options={allFalimyStatuses}
                     />
                  </div>
                  <div className={s.selectorDiv}>
                     <label>гражданство</label>
                     <Select className={s.selector}
-                    onChange={e => setData(prev => ({...prev, nationality: e.value}))}
+                    name='nationality'
+                    value={data.nationality}
+                    onChange={selectedOption => {
+                        handleNationatilyChange(selectedOption, values);
+                        handleChange("nationality");
+                    }}
+                     onBlur={handleBlur}
                      options={allNationalities}
                     />
                  </div>
-                 <div className={s.selectorDiv}>
+                   <div className={s.selectorDiv}>
                     <label>инвалидность</label>
                     <Select className={s.selector}
-                    onChange={e => setData(prev => ({...prev, disability: e.value}))}
-                     options={allDisabilities}
+                   name='disability'
+                   value={data.disability}
+                   onChange={selectedOption => {
+                       handleDisabilityChange(selectedOption, values);
+                       handleChange("disability");
+                   }}
+                    onBlur={handleBlur}
+                    options={allDisabilities}
                     />
                  </div>
                  <div className={s.checkboxDiv}>
                     <label>пенсионер</label>
-                 <input type="checkbox" onChange={e => setData(prev => ({...prev, isPensioner: e.target.checked}))} checked={data.isPensioner}/>
+                    <Input type='checkbox' checked={data.isPensioner} name='isPensioner' placeholder='пенсионер' onBlur={handleBlur} onChange={e => setData(prev => ({...prev, isPensioner: e.target.checked}))}/>
                  </div>
 
                  <div className={s.checkboxDiv}>
                     <label>ежемесячный доход</label>
-                    <input type="number" min="0.00" max="10000.00" step="0.01" onChange={e => setData(prev => ({...prev, salaryMonth: e.target.value}))}/>
-                 </div>*/} 
+                    <Input type='number' name='salaryMonth' placeholder='ежемесячный доход' onBlur={handleBlur} onChange={handleChange}/>
+
+                    {/* <input type="number" min="0.00" max="10000.00" step="0.01" onChange={e => setData(prev => ({...prev, salaryMonth: e.target.value}))}/> */}
+                 </div>
 
             </div> 
             <button type="submit" className={s.btnSubmit}>Create</button>

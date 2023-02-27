@@ -6,7 +6,6 @@ import * as Yup from 'yup'
 
 export const useFormilCreateClient = (data : ICreateClientData) => {
 
-
     const formik = useFormik({
         initialValues: {
             surname : data.surname,
@@ -21,17 +20,17 @@ export const useFormilCreateClient = (data : ICreateClientData) => {
             placeBirth : data.placeBirth,
             cityLive : data.cityLive,
             address : data.address,
-            // homePhone : data.homePhone,
-            // mobilePhone  : data.mobilePhone,
-            // email : data.email,
-            // work : data.work,
-            // position  : data.position,
-            // cityRegistration : data.cityRegistration,
-            // familyStatus : data.familyStatus,
-            // nationality : data.nationality,
-            // disability : data.disability,
-            // isPensioner : data.isPensioner,
-            // salaryMonth : data.salaryMonth
+            homePhone : data.homePhone,
+            mobilePhone  : data.mobilePhone,
+            email : data.email,
+            work : data.work,
+            position  : data.position,
+            cityRegistration : data.cityRegistration,
+            familyStatus : data.familyStatus,
+            nationality : data.nationality,
+            disability : data.disability,
+            isPensioner : data.isPensioner,
+            salaryMonth : data.salaryMonth
         },
         validateOnChange: false, // this one
         validateOnBlur: false, // and this one
@@ -48,17 +47,17 @@ export const useFormilCreateClient = (data : ICreateClientData) => {
             placeBirth : Yup.string().required("placeBirth is required field"),
             cityLive : Yup.number().required("cityLive is required field").positive("not positive"),
             address : Yup.string().required("address is required field"),
-            // homePhone : Yup.string().nullable().matches(new RegExp("[0-9]{2}-[0-9]{2}-[0-9]{2}"), "not valid regex").length(8, "homePhone is not length 8"),
-            // mobilePhone : Yup.string().nullable().matches(new RegExp("+(375)-([0-9]{2})-([0-9]{3})-([0-9]{2})-([0-9]{2})"), "not valid regex").length(26, "mobilePhone is length not 26"),
-            // email : Yup.string().nullable().email("not valid regex"),
-            // work : Yup.string().nullable(),
-            // position : Yup.string().nullable(),
-            // cityRegistration : Yup.number().required("cityRegistration is required field").positive("not positive"),
-            // familyStatus : Yup.number().required("familyStatus is required field").positive("not positive"),
-            // nationality : Yup.number().required("nationality is required field").positive("not positive"),
-            // disability : Yup.number().required("disability is required field").positive("not positive"),
-            // isPensioner : Yup.boolean().required("isPensioner is required field"),
-            // salaryMonth : Yup.string().nullable()
+            homePhone : Yup.string().matches(new RegExp("[0-9]{2}-[0-9]{2}-[0-9]{2}"), "not valid regex").length(8, "homePhone is not length 8"),
+            mobilePhone : Yup.string().matches(new RegExp("375-[0-9]{2}-[0-9]{3}-[0-9]{2}-[0-9]{2}"), "not valid regex"),
+            email : Yup.string().email("not valid regex"),
+            work : Yup.string(),
+            position : Yup.string(),
+            cityRegistration : Yup.number().required("cityRegistration is required field").positive("not positive"),
+            familyStatus : Yup.number().required("familyStatus is required field").positive("not positive"),
+            nationality : Yup.number().required("nationality is required field").positive("not positive"),
+            disability : Yup.number().required("disability is required field").positive("not positive"),
+            isPensioner : Yup.boolean().required("isPensioner is required field"),
+            salaryMonth : Yup.string()
         }),
         onSubmit: (values) => {
            console.log("yeeees")
