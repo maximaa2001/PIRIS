@@ -75,4 +75,9 @@ label{
     background-color: #00A25F;
 }
 
+.error{
+    color: red;
+    margin-bottom: 10px;
+}
+
 

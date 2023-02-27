@@ -1,15 +1,11 @@
 import { Input } from '../../input/Input'
 import s from './AddClientForm.module.css'
 import React, { useEffect, useState } from 'react';
-import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 import MaskedInput from 'react-text-mask'
 import Select from 'react-select';
 import { getRefs } from '../../../service/ApiService';
-import { ICity, IDisability, IFamilyStatus, INationality } from '../../../model/model';
 import { useFormilCreateClient } from '../../../hooks/useFormikCreateClient';
-import { ICreateClientData } from "../../../model/model"
-import {useFormik, ErrorMessage} from 'formik'
 
 export const AddClientForm = () => {
 
@@ -132,10 +128,15 @@ export const AddClientForm = () => {
         <form onSubmit={handleSubmit}>
             <div className={s.container}>
                 <Input type='text' name='surname' value={values.surname} placeholder='фамилия' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                {errors.surname && <div className={s.error}>{errors.surname}</div>}
                 <Input type='text' name='name' value={values.name} placeholder='имя' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                {errors.name && <div className={s.error}>{errors.name}</div>}
                 <Input type='text' name='lastname' value={values.lastname} placeholder='отчество' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                {errors.lastname && <div className={s.error}>{errors.lastname}</div>}
                 <Input type="date" name='birthDay' value={values.birthDay} placeholder='дата рождения' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                {errors.birthDay && <div className={s.error}>{errors.birthDay}</div>}
                 <Input type='text' name='partPassport' value={values.partPassport} placeholder='серия паспорта' onBlur={handleBlur} onChange={e => handleChange(e)}/>
+                {errors.partPassport && <div className={s.error}>{errors.partPassport}</div>}
                 <MaskedInput
                         mask={[/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/]}
                         className={s.number}
@@ -146,8 +147,11 @@ export const AddClientForm = () => {
                         onBlur={handleBlur}
                         onChange={e => handleChange(e)}
                 />
+                 {errors.numberPassport && <div className={s.error}>{errors.numberPassport}</div>}
                 <Input type='text' name='sourcePassport' value={values.sourcePassport} placeholder='кем выдан пасспорт' onBlur={handleBlur} onChange={e => handleChange(e)}/>
+                {errors.sourcePassport && <div className={s.error}>{errors.sourcePassport}</div>}
                 <Input type="date" name='startDatePassport' value={values.startDatePassport} placeholder='дата рождения' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                {errors.startDatePassport && <div className={s.error}>{errors.startDatePassport}</div>}
                  <MaskedInput
                         mask={[/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/[A-Z]/,/\d/,/\d/,/\d/,/[A-Z]/,/[A-Z]/, /\d/]}
                         className={s.number}
@@ -158,7 +162,9 @@ export const AddClientForm = () => {
                         onBlur={handleBlur}
                         onChange={e => handleChange(e)}
                 />
+                 {errors.identidierNumber && <div className={s.error}>{errors.identidierNumber}</div>}
                  <Input type='text' name='placeBirth' value={values.placeBirth} placeholder='место рождения'  onBlur={handleBlur} onChange={e => handleChange(e)}/>
+                 {errors.placeBirth && <div className={s.error}>{errors.placeBirth}</div>}
                 <div className={s.selectorDiv}>
                     <label>город фактического проживания</label>
                     <Select className={s.selector}
@@ -172,7 +178,9 @@ export const AddClientForm = () => {
                      options={allCities}
                     />
                  </div>
+                 {errors.cityLive && <div className={s.error}>{errors.cityLive}</div>}
                 <Input type='text' name='address' value={values.address} placeholder='адрес фактического проживания' onBlur={handleBlur} onChange={e => handleChange(e)}/>
+                {errors.address && <div className={s.error}>{errors.address}</div>}
                 <MaskedInput
                         mask={[/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]}
                         className={s.number}
@@ -183,6 +191,7 @@ export const AddClientForm = () => {
                         onBlur={handleBlur}
                         onChange={e => handleChange(e)}
                 />
+                {errors.homePhone && <div className={s.error}>{errors.homePhone}</div>}
                 <MaskedInput
                         mask={[ 3, 7, 5,'-',/\d/,/\d/, '-', /\d/, /\d/, /\d/, '-', /\d/, /\d/,'-', /\d/, /\d/]}
                         className={s.number}
@@ -193,7 +202,9 @@ export const AddClientForm = () => {
                         onBlur={handleBlur}
                         onChange={e => handleChange(e)}
                 />
+                {errors.mobilePhone && <div className={s.error}>{errors.mobilePhone}</div>}
                <Input type='text' name='email' value={values.email} placeholder='email' onBlur={handleBlur} onChange={e => handleChange(e)}/>
+               {errors.email && <div className={s.error}>{errors.email}</div>}
                 <Input type='text' name='work'  value={values.work} placeholder='место работы' onBlur={handleBlur} onChange={e => handleChange(e)}/>
                 <Input  type='text' name='position' value={values.position} placeholder='должность' onBlur={handleBlur} onChange={e => handleChange(e)}/>
                 <div className={s.selectorDiv}>
@@ -209,6 +220,7 @@ export const AddClientForm = () => {
                       options={allCities}
                     />
                  </div>
+                 {errors.cityRegistration && <div className={s.error}>{errors.cityRegistration}</div>}
                  <div className={s.selectorDiv}>
                     <label>семейное положение</label>
                     <Select className={s.selector}
@@ -222,6 +234,7 @@ export const AddClientForm = () => {
                       options={allFalimyStatuses}
                     />
                  </div>
+                 {errors.familyStatus && <div className={s.error}>{errors.familyStatus}</div>}
                  <div className={s.selectorDiv}>
                     <label>гражданство</label>
                     <Select className={s.selector}
@@ -235,6 +248,7 @@ export const AddClientForm = () => {
                      options={allNationalities}
                     />
                  </div>
+                 {errors.nationality && <div className={s.error}>{errors.nationality}</div>}
                    <div className={s.selectorDiv}>
                     <label>инвалидность</label>
                     <Select className={s.selector}
@@ -248,18 +262,16 @@ export const AddClientForm = () => {
                     options={allDisabilities}
                     />
                  </div>
+                 {errors.disability && <div className={s.error}>{errors.disability}</div>}
                  <div className={s.checkboxDiv}>
                     <label>пенсионер</label>
                     <Input type='checkbox' checked={data.isPensioner} name='isPensioner' placeholder='пенсионер' onBlur={handleBlur} onChange={e => setData(prev => ({...prev, isPensioner: e.target.checked}))}/>
                  </div>
-
+                 {errors.isPensioner && <div className={s.error}>{errors.isPensioner}</div>}
                  <div className={s.checkboxDiv}>
                     <label>ежемесячный доход</label>
                     <Input type='number' name='salaryMonth' placeholder='ежемесячный доход' onBlur={handleBlur} onChange={handleChange}/>
-
-                    {/* <input type="number" min="0.00" max="10000.00" step="0.01" onChange={e => setData(prev => ({...prev, salaryMonth: e.target.value}))}/> */}
                  </div>
-
             </div> 
             <button type="submit" className={s.btnSubmit}>Create</button>
 
