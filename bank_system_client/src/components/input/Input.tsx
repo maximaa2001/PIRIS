@@ -4,10 +4,14 @@ import s from './Input.module.css'
 interface IInput {
     placeholder : string;
     onChange : (IntrinsicAttributes) => void;
+    onBlur : (IntrinsicAttributes) => void;
+    type : string
+    name? : string;
+    value? : string;
 }
 
-export const Input : FC<IInput> = ({placeholder, onChange}) => {
+export const Input : FC<IInput> = ({placeholder, onChange,onBlur, type, name, value, }) => {
     return(
-        <input className={s.input} placeholder={placeholder} onChange={onChange}/>
+        <input type={type} name={name} value={value} onBlur={onBlur} className={s.input} placeholder={placeholder} onChange={onChange}/>
     )
 }

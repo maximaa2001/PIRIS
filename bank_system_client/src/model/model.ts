@@ -29,24 +29,24 @@ export interface ICreateClientData {
     surname : string;
     name : string;
     lastname : string;
-    birthDay : Date;
+    birthDay : string;
     partPassport: string;
     numberPassport : string;
     sourcePassport : string;
-    startDatePassport : Date;
+    startDatePassport : string;
     identidierNumber : string;
     placeBirth : string;
     cityLive : number;
     address : string;
-    homePhone : string;
-    mobilePhone  : string;
-    email : string;
-    work : string;
-    position  : string;
-    cityRegistration : number
-    familyStatus : number;
-    nationality : number;
-    disability : number;
-    isPensioner : boolean;
-    salaryMonth : string;
+    // homePhone : string;
+    // mobilePhone  : string;
+    // email : string;
+    // work : string;
+    // position  : string;
+    // cityRegistration : number
+    // familyStatus : number;
+    // nationality : number;
+    // disability : number;
+    // isPensioner : boolean;
+    // salaryMonth : string;
 }

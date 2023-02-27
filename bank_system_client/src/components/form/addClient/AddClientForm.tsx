@@ -9,34 +9,54 @@ import { getRefs } from '../../../service/ApiService';
 import { ICity, IDisability, IFamilyStatus, INationality } from '../../../model/model';
 import { useFormilCreateClient } from '../../../hooks/useFormikCreateClient';
 import { ICreateClientData } from "../../../model/model"
+import {useFormik, ErrorMessage} from 'formik'
 
 export const AddClientForm = () => {
 
+    const getStringDate = (date : Date) => {
+        var d = new Date(date),
+        month = '' + (d.getMonth() + 1),
+        day = '' + d.getDate(),
+        year = d.getFullYear();
+
+    if (month.length < 2) 
+        month = '0' + month;
+    if (day.length < 2) 
+        day = '0' + day;
+
+    return [year, month, day].join('-');
+    }
+
     const [data, setData] = useState({
-        surname : null,
-        name : null,
-        lastname : null,
-        birthDay : new Date(),
-        partPassport: null,
-        numberPassport : null,
-        sourcePassport : null,
-        startDatePassport : new Date(),
-        identidierNumber : null,
-        placeBirth : null,
+        surname : "",
+        name : "",
+        lastname : "",
+        birthDay : getStringDate(new Date()),
+        partPassport: "",
+        numberPassport : "",
+        sourcePassport : "",
+        startDatePassport : getStringDate(new Date()),
+        identidierNumber : "",
+        placeBirth : "",
         cityLive : -1,
         address : null,
-        homePhone : null,
-        mobilePhone  : null,
-        email : null,
-        work : null,
-        position  : null,
-        cityRegistration : -1,
-        familyStatus : -1,
-        nationality : -1,
-        disability : -1,
-        isPensioner : false,
-        salaryMonth : null
+        // homePhone : null,
+        // mobilePhone  : null,
+        // email : null,
+        // work : null,
+        // position  : null,
+        // cityRegistration : -1,
+        // familyStatus : -1,
+        // nationality : -1,
+        // disability : -1,
+        // isPensioner : false,
+        // salaryMonth : null
     })
+
+ 
+
+    
+
 
     const [allCities, setAllCities] = useState([]);
     const [allFalimyStatuses, setAllFamilyStatuses] = useState([]);
@@ -54,8 +74,6 @@ export const AddClientForm = () => {
         // dirty,
     } = useFormilCreateClient(data)
 
-    console.log(errors)
- 
     
 
 
@@ -89,52 +107,53 @@ export const AddClientForm = () => {
         })
     }, [])
 
+    console.log(data.cityLive)
 
 
-    const submitHandler = (e : React.FormEvent) => {
-        e.preventDefault();
-        handleSubmit()
-    }
 
     return(
-        <form onSubmit={submitHandler}>
+        <form onSubmit={handleSubmit}>
             <div className={s.container}>
-                <Input placeholder='фамилия' onChange={e => setData(prev => ({...prev, surname: e.target.value}))}/>
-                <Input placeholder='имя' onChange={e => setData(prev => ({...prev, name: e.target.value}))}/>
-                <Input placeholder='отчество' onChange={e => setData(prev => ({...prev, lastname: e.target.value}))}/>
-                <div className={s.date}>
-                   <label>дата рождения</label>
-                    <DatePicker class={s.date} selected={data.birthDay} onChange={(date) => setData(prev => ({...prev, birthDay: date}))} />
-                </div>
-                <Input placeholder='серия паспорта' onChange={e => setData(prev => ({...prev, partPassport: e.target.value}))}/>
+                <Input type='text' name='surname' value={values.surname} placeholder='фамилия' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                <Input type='text' name='name' value={values.name} placeholder='имя' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                <Input type='text' name='lastname' value={values.lastname} placeholder='отчество' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                <Input type="date" name='birthDay' value={values.birthDay} placeholder='дата рождения' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                <Input type='text' name='partPassport' value={values.partPassport} placeholder='серия паспорта' onBlur={handleBlur} onChange={e => handleChange(e)}/>
                 <MaskedInput
                         mask={[/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/]}
                         className={s.number}
                         guide={false}
                         placeholder="номер паспорта"
-                        onChange={(e) => setData(prev => ({ ...prev,   numberPassport : e.target.value   }))}
+                        name='numberPassport'
+                        value={values.numberPassport}
+                        onBlur={handleBlur}
+                        onChange={e => handleChange(e)}
                 />
-                <Input placeholder='кем выдан пасспорт' onChange={e => setData(prev => ({...prev, sourcePassport: e.target.value}))}/>
-                <div className={s.date}>
-                    <label>дата выдачи пасспорта</label>
-                    <DatePicker class={s.date} selected={data.startDatePassport} onChange={(date) => setData(prev => ({...prev, startDatePassport: date}))}/>
-                </div>
-                <MaskedInput
+                <Input type='text' name='sourcePassport' value={values.sourcePassport} placeholder='кем выдан пасспорт' onBlur={handleBlur} onChange={e => handleChange(e)}/>
+                <Input type="date" name='startDatePassport' value={values.startDatePassport} placeholder='дата рождения' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                 <MaskedInput
                         mask={[/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/\d/,/[A-Z]/,/\d/,/\d/,/\d/,/[A-Z]/,/[A-Z]/, /\d/]}
                         className={s.number}
                         guide={true}
                         placeholder="идентификационнный номер"
-                        onChange={e => setData(prev => ({...prev, identidierNumber: e.target.value}))}
+                        name='identidierNumber'
+                        value={values.identidierNumber}
+                        onBlur={handleBlur}
+                        onChange={e => handleChange(e)}
                 />
-                 <Input placeholder='место рождения' onChange={e => setData(prev => ({...prev, placeBirth: e.target.value}))}/>
-                 <div className={s.selectorDiv}>
+                 <Input type='text' name='placeBirth' value={values.placeBirth} placeholder='место рождения'  onBlur={handleBlur} onChange={e => handleChange(e)}/>
+                 <select name='cityLive' value={values.cityLive} onBlur={handleBlur} onChange={handleChange}>
+                    <option>sf</option>
+                    <option>sf</option>
+                 </select>
+                {/* <div className={s.selectorDiv}>
                     <label>город фактического проживания</label>
                     <Select className={s.selector}
                     onChange={e => setData(prev => ({...prev, placeBirth : e.value}))}
                      options={allCities}
                     />
-                 </div>
-                <Input placeholder='адрес фактического проживания' onChange={e => setData(prev => ({...prev, address: e.target.value}))}/>
+                 </div> */}
+                {/* <Input placeholder='адрес фактического проживания' onChange={e => setData(prev => ({...prev, address: e.target.value}))}/>
                 <MaskedInput
                         mask={[/\d/,/\d/,'-',/\d/,/\d/,'-',/\d/,/\d/]}
                         className={s.number}
@@ -188,10 +207,11 @@ export const AddClientForm = () => {
                  <div className={s.checkboxDiv}>
                     <label>ежемесячный доход</label>
                     <input type="number" min="0.00" max="10000.00" step="0.01" onChange={e => setData(prev => ({...prev, salaryMonth: e.target.value}))}/>
-                 </div>
+                 </div>*/} 
 
-                 <button type="submit" className={s.btnSubmit}>Create</button>
-            </div>
+            </div> 
+            <button type="submit" className={s.btnSubmit}>Create</button>
+
         </form>
     )
 }
