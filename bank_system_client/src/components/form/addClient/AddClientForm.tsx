@@ -1,15 +1,19 @@
 import { Input } from '../../input/Input'
 import s from './AddClientForm.module.css'
-import React, { useEffect, useState } from 'react';
+import { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import MaskedInput from 'react-text-mask'
 import Select from 'react-select';
 import { getRefs } from '../../../service/ApiService';
 import { useFormikCreateClient } from '../../../hooks/useFormikCreateClient';
-import { useModal } from '../../../hooks/useModal';
-import { text } from 'stream/consumers';
+import { getClient } from '../../../service/ApiService';
+import { useContext } from 'react';
+import { Context } from '../../..';
+import { observer } from 'mobx-react-lite'
+import { IClientData } from '../../../model/model';
 
-export const AddClientForm = () => {
+
+export const AddClientForm = observer (() => {
 
     const getStringDate = (date : Date) => {
         var d = new Date(date),
@@ -25,7 +29,7 @@ export const AddClientForm = () => {
         return [year, month, day].join('-');
     }
 
-    const [data, setData] = useState({
+    const [data, setData] = useState<IClientData>({
         surname : "",
         name : "",
         lastName : "",
@@ -52,22 +56,24 @@ export const AddClientForm = () => {
     })
 
 
+
     const [allCities, setAllCities] = useState([]);
     const [allFalimyStatuses, setAllFamilyStatuses] = useState([]);
     const [allNationalities, setAllNationalities] = useState([]);
     const [allDisabilities, setAllDisaboloties] = useState([]);
 
+    const {globalStore} = useContext(Context)
+    console.log(allCities)
+
 
     const {
-        touched,
         handleSubmit,
         errors,
         values,
         handleChange,
         handleBlur,
-        isValid,
-    } = useFormikCreateClient(data)    
-
+        setValues
+    } = useFormikCreateClient(data)
 
 
     useEffect(() => {
@@ -98,8 +104,10 @@ export const AddClientForm = () => {
             }))
             
         })
+        if(globalStore.updateClientId) {
+            getClient(globalStore.updateClientId).then(res => {setData(res); setValues(res)})
+        }
     }, [])
-
 
 
     const handleCityLiveChange = (selectedCity, values) => {
@@ -126,7 +134,6 @@ export const AddClientForm = () => {
         values.disability = selectedCity.value;
         setData(preev => ({...preev, disability: selectedCity}));
     }
-    
 
     return(
         <form onSubmit={handleSubmit}>
@@ -281,4 +288,4 @@ export const AddClientForm = () => {
 
         </form>
     )
-}
+})

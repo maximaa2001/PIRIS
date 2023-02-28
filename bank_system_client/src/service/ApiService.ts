@@ -1,5 +1,5 @@
 import axios from "axios";
-import { ICreateClientData, IRef } from "../model/model";
+import { IClientData, IClientsMiniData, IRef } from "../model/model";
 
 
 
@@ -11,7 +11,22 @@ export async function getRefs() {
     } 
 }
 
-export async function createClient(data : ICreateClientData) {
-    return (await axios.post<IRef>("http://localhost:8100/client", data)).data
-   
+export async function createClient(data : IClientData) {
+    return (await axios.post("http://localhost:8100/client", data)).data
+}
+
+export async function getClients() {
+    return (await axios.get<IClientsMiniData>("http://localhost:8100/clients")).data
+}
+
+export async function getClient(id : number) {
+    return (await axios.get<IClientData>("http://localhost:8100/client" + "?id=" + id)).data
+}
+
+export async function deleteClient(id : number) {
+    return (await axios.delete("http://localhost:8100/client" + "?id=" + id)).data
+}
+
+export async function updateClient(data : IClientData) {
+    return (await axios.put("http://localhost:8100/client", data)).data
 }

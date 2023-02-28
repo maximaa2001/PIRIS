@@ -1,5 +1,5 @@
-import { HeaderLogo } from '../../modules/header/logo/HeaderLogo'
-import { Navbar } from '../../modules/header/navbar/Navbar'
+import { HeaderLogo } from '../logo/HeaderLogo'
+import { Navbar } from '../navbar/Navbar'
 import s from './Header.module.css'
 
 export const Header = () => {

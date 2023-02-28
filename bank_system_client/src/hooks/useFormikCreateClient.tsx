@@ -1,11 +1,13 @@
 import { useFormik } from "formik"
-import { ICreateClientData } from "../model/model"
+import { IClientData } from "../model/model"
 import * as Yup from 'yup'
-import { createClient } from "../service/ApiService" 
+import { createClient, updateClient } from "../service/ApiService" 
+import { observer } from 'mobx-react-lite'
+import { FC } from "react"
 
 
 
-export const useFormikCreateClient = (data : ICreateClientData) => {
+export const useFormikCreateClient  = (data : IClientData) => {
 
     const formik = useFormik({
         initialValues: {
@@ -33,8 +35,8 @@ export const useFormikCreateClient = (data : ICreateClientData) => {
             isPensioner : data.isPensioner,
             salaryMonth : data.salaryMonth
         },
-        validateOnChange: false, // this one
-        validateOnBlur: false, // and this one
+        validateOnChange: false, 
+        validateOnBlur: false,
         validationSchema: Yup.object().shape({
             surname : Yup.string().required("required field"),
             name : Yup.string().required("required field"),
@@ -63,6 +65,34 @@ export const useFormikCreateClient = (data : ICreateClientData) => {
         onSubmit:  async ({ surname, name, lastName, dateBirth, partPassport, numberPassport, sourcePassport, startDatePassport,
         identifierNumberPassport, placeBirth, cityLive, address, homePhone, mobilePhone, email, work, position,
          cityRegistration, familyStatus, nationality, disability, isPensioner, salaryMonth }, {setFieldError }) => {
+            if(data.id) {
+                updateClient({
+                    id : data.id,
+                    surname,
+                    name ,
+                    lastName,
+                    dateBirth,
+                    partPassport,
+                    numberPassport,
+                    sourcePassport,
+                    startDatePassport,
+                    identifierNumberPassport ,
+                    placeBirth,
+                    cityLive,
+                    address,
+                    homePhone,
+                    mobilePhone,
+                    email,
+                    work,
+                    position,
+                    cityRegistration,
+                    familyStatus,
+                    nationality,
+                    disability,
+                    isPensioner,
+                    salaryMonth
+                })
+            } else{
                 createClient({ surname,
                     name ,
                     lastName,
@@ -103,7 +133,9 @@ export const useFormikCreateClient = (data : ICreateClientData) => {
                             return
                         }
                     })
-            },
+            }
+              
+        },
     })
 
     return {...formik}

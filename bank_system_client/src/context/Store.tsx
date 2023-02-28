@@ -1,14 +1,20 @@
 import { makeAutoObservable, action } from 'mobx'
+import { IClientData } from '../model/model';
 
 class GlobalStore {
-    isLoading = false;
+    updateClientId : number = null;
+    updateClientData : IClientData = null;
 
     constructor() {
         makeAutoObservable(this)
     }
 
-    setIsLoading(bool : boolean) {
-        this.isLoading = bool;
+    setUpdatedId(id : number) {
+        this.updateClientId = id;
+    }
+
+    setUpdatedData(data : IClientData) {
+        this.updateClientData = data;
     }
 }
 

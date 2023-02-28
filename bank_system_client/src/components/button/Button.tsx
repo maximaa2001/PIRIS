@@ -10,7 +10,9 @@ interface IButton {
 
 export const Button : FC<IButton>= ({ onClick, type,  children}) => {
     return(
-        <button className={cn(s.button, {[s.addClientButton] : type === 'addClientButton'})} onClick={onClick}>
+        <button className={cn(s.button, {[s.addClientButton] : type === 'addClientButton'},
+         {[s.deleteClientButton] : type === 'deleteClientButton'},
+         {[s.updateClientButton] : type === 'updateClientButton'})} onClick={onClick}>
            {children}
         </button>
         )

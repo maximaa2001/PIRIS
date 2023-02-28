@@ -25,7 +25,8 @@ export interface IRef {
     nationalities : INationality[]
 }
 
-export interface ICreateClientData {
+export interface IClientData {
+    id? : number
     surname : string;
     name : string;
     lastName : string;
@@ -49,4 +50,21 @@ export interface ICreateClientData {
     disability : number;
     isPensioner : boolean;
     salaryMonth : string;
+}
+
+export interface IClientMiniData {
+    id : number
+    surname : string;
+    name : string;
+    lastName : string;
+    partPassport: string;
+    numberPassport : string;
+}
+
+export interface IClientsMiniData {
+    clients : IClientMiniData[]
+}
+
+export interface IData {
+    data : IClientData
 }
