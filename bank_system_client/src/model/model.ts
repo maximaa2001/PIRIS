@@ -28,13 +28,13 @@ export interface IRef {
 export interface ICreateClientData {
     surname : string;
     name : string;
-    lastname : string;
-    birthDay : string;
+    lastName : string;
+    dateBirth : string;
     partPassport: string;
     numberPassport : string;
     sourcePassport : string;
     startDatePassport : string;
-    identidierNumber : string;
+    identifierNumberPassport : string;
     placeBirth : string;
     cityLive : number;
     address : string;

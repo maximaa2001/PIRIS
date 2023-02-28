@@ -5,7 +5,9 @@ import "react-datepicker/dist/react-datepicker.css";
 import MaskedInput from 'react-text-mask'
 import Select from 'react-select';
 import { getRefs } from '../../../service/ApiService';
-import { useFormilCreateClient } from '../../../hooks/useFormikCreateClient';
+import { useFormikCreateClient } from '../../../hooks/useFormikCreateClient';
+import { useModal } from '../../../hooks/useModal';
+import { text } from 'stream/consumers';
 
 export const AddClientForm = () => {
 
@@ -26,13 +28,13 @@ export const AddClientForm = () => {
     const [data, setData] = useState({
         surname : "",
         name : "",
-        lastname : "",
-        birthDay : getStringDate(new Date()),
+        lastName : "",
+        dateBirth : getStringDate(new Date()),
         partPassport: "",
         numberPassport : "",
         sourcePassport : "",
         startDatePassport : getStringDate(new Date()),
-        identidierNumber : "",
+        identifierNumberPassport : "",
         placeBirth : "",
         cityLive : -1,
         address : "",
@@ -55,6 +57,7 @@ export const AddClientForm = () => {
     const [allNationalities, setAllNationalities] = useState([]);
     const [allDisabilities, setAllDisaboloties] = useState([]);
 
+
     const {
         touched,
         handleSubmit,
@@ -63,8 +66,9 @@ export const AddClientForm = () => {
         handleChange,
         handleBlur,
         isValid,
-        // dirty,
-    } = useFormilCreateClient(data)    
+    } = useFormikCreateClient(data)    
+
+
 
     useEffect(() => {
         getRefs().then(item => {
@@ -131,10 +135,10 @@ export const AddClientForm = () => {
                 {errors.surname && <div className={s.error}>{errors.surname}</div>}
                 <Input type='text' name='name' value={values.name} placeholder='имя' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
                 {errors.name && <div className={s.error}>{errors.name}</div>}
-                <Input type='text' name='lastname' value={values.lastname} placeholder='отчество' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
-                {errors.lastname && <div className={s.error}>{errors.lastname}</div>}
-                <Input type="date" name='birthDay' value={values.birthDay} placeholder='дата рождения' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
-                {errors.birthDay && <div className={s.error}>{errors.birthDay}</div>}
+                <Input type='text' name='lastName' value={values.lastName} placeholder='отчество' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                {errors.lastName && <div className={s.error}>{errors.lastName}</div>}
+                <Input type="date" name='dateBirth' value={values.dateBirth} placeholder='дата рождения' onBlur={handleBlur} onChange={e => {handleChange(e)}}/>
+                {errors.dateBirth && <div className={s.error}>{errors.dateBirth}</div>}
                 <Input type='text' name='partPassport' value={values.partPassport} placeholder='серия паспорта' onBlur={handleBlur} onChange={e => handleChange(e)}/>
                 {errors.partPassport && <div className={s.error}>{errors.partPassport}</div>}
                 <MaskedInput
@@ -157,12 +161,12 @@ export const AddClientForm = () => {
                         className={s.number}
                         guide={true}
                         placeholder="идентификационнный номер"
-                        name='identidierNumber'
-                        value={values.identidierNumber}
+                        name='identifierNumberPassport'
+                        value={values.identifierNumberPassport}
                         onBlur={handleBlur}
                         onChange={e => handleChange(e)}
                 />
-                 {errors.identidierNumber && <div className={s.error}>{errors.identidierNumber}</div>}
+                 {errors.identifierNumberPassport && <div className={s.error}>{errors.identifierNumberPassport}</div>}
                  <Input type='text' name='placeBirth' value={values.placeBirth} placeholder='место рождения'  onBlur={handleBlur} onChange={e => handleChange(e)}/>
                  {errors.placeBirth && <div className={s.error}>{errors.placeBirth}</div>}
                 <div className={s.selectorDiv}>

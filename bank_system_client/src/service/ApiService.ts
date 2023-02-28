@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IRef } from "../model/model";
+import { ICreateClientData, IRef } from "../model/model";
 
 
 
@@ -9,4 +9,9 @@ export async function getRefs() {
     } catch(err) {
         console.error(err)
     } 
+}
+
+export async function createClient(data : ICreateClientData) {
+    return (await axios.post<IRef>("http://localhost:8100/client", data)).data
+   
 }
