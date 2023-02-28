@@ -6,6 +6,7 @@ import by.bsuir.bankSystem.repo.ClientRepo;
 import org.springframework.stereotype.Component;
 
 import javax.validation.ConstraintViolationException;
+import java.util.List;
 import java.util.Optional;
 
 @Component
@@ -23,6 +24,21 @@ public class ClientDaoImpl implements ClientDao {
         } catch (ConstraintViolationException e) {
             throw new BadRequestException(e.getMessage());
         }
+    }
+
+    @Override
+    public List<Client> findClients() {
+        return clientRepo.findAll();
+    }
+
+    @Override
+    public Optional<Client> findById(Integer id) {
+        return clientRepo.findById(id);
+    }
+
+    @Override
+    public void delete(Integer id) {
+        clientRepo.deleteById(id);
     }
 
     @Override
