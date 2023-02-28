@@ -27,7 +27,11 @@ public class GlobalExceptionHandler {
         Pattern pattern = Pattern.compile("interpolatedMessage='([^']+)'");
         Matcher matcher = pattern.matcher(e.getMessage());
         if (matcher.find()) {
-            return new MessageDto(matcher.group(1));
+            String group = matcher.group(1);
+            int i = group.indexOf(" ");
+            String field = group.substring(0, i);
+            String message = group.substring(i);
+            return new MessageDto(field, message);
         }
         return new MessageDto(e.getMessage());
     }

@@ -16,15 +16,13 @@ public class ClientDto {
     private Integer id;
     private String surname;
     private String name;
-    @JsonProperty("lastname")
+
     private String lastName;
-    @JsonProperty("birthDay")
     private String dateBirth;
     private String partPassport;
     private String numberPassport;
     private String sourcePassport;
     private String startDatePassport;
-    @JsonProperty("identidierNumber")
     private String identifierNumberPassport;
     private String placeBirth;
     @JsonProperty("cityLive")

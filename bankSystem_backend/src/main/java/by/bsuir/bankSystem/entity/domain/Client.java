@@ -1,5 +1,6 @@
 package by.bsuir.bankSystem.entity.domain;
 
+import by.bsuir.bankSystem.util.NullOrPattern;
 import lombok.*;
 import org.hibernate.validator.constraints.Length;
 
@@ -24,56 +25,41 @@ public class Client {
     @ToString.Include
     private Integer id;
 
-    @NotNull(message = "surname required")
-    @NotEmpty(message = "surname not empty")
     @Pattern(regexp = "[a-zA-Z]+", message = "surname [a-zA-Z]+")
     @Column(name = "surname")
     private String surname;
-    @NotNull(message = "name required")
-    @NotEmpty(message = "name not empty")
     @Pattern(regexp = "[a-zA-Z]+", message = "name [a-zA-Z]+")
     @Column(name = "name")
     private String name;
 
-    @NotNull(message = "lastName required")
-    @NotEmpty(message = "lastName not empty")
     @Pattern(regexp = "[a-zA-Z]+", message = "lastName [a-zA-Z]+")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull(message = "dateBirth required")
+    @Past(message = "dateBirth is not valid")
     @Column(name = "date_birth")
     private Date dateBirth;
 
-    @NotNull(message = "partPassport required")
-    @Length(min = 2, max = 2, message = "partPassport length is 2")
     @Pattern(regexp = "[A-Z]{2}", message = "lastName [A-Z]{2}")
     @Column(name = "part_passport")
     private String partPassport;
 
-    @NotNull(message = "numberPassport required")
-    @Length(min = 7, max = 7, message = "numberPassport length is 7")
     @Pattern(regexp = "[0-9]{7}", message = "numberPassport [0-9]{7}")
     @Column(name = "number_passport")
     private String numberPassport;
 
-    @NotNull(message = "sourcePassport required")
     @NotEmpty(message = "sourcePassport not empty")
     @Column(name = "source_passport")
     private String sourcePassport;
 
-    @NotNull(message = "startDatePassport required")
+    @Past(message = "startDatePassport is not valid")
     @Column(name = "start_date_passport")
     private Date startDatePassport;
 
-    @NotNull(message = "identifierNumberPassport required")
-    @NotEmpty(message = "identifierNumberPassport not empty")
-    @Length(min = 14, max = 14, message = "numberPassport length is 14")
     @Pattern(regexp = "[0-9]{7}[A-Z]{1}[0-9]{3}[A-Z]{2}[0-9]{1}", message = "identifierNumberPassport [0-9]{7}[A-Z]{1}[0-9]{3}[A-Z]{2}[0-9]{1}")
     @Column(name = "identifier_number_passport")
     private String identifierNumberPassport;
 
-    @NotNull(message = "placeBirth required")
     @NotEmpty(message = "placeBirth not empty")
     @Column(name = "place_birth")
     private String placeBirth;
@@ -83,22 +69,19 @@ public class Client {
     @JoinColumn(name = "city_live_id", referencedColumnName = "id")
     private City cityLive;
 
-    @NotNull(message = "address required")
     @NotEmpty(message = "address not empty")
     @Column(name = "address")
     private String address;
 
-    @Length(min = 6, max = 6, message = "homePhone length is 6")
-    @Pattern(regexp = "[0-9]{6}", message = "homePhone [0-9]{6}")
+    @NullOrPattern(pattern = "[0-9]{6}", message = "homePhone [0-9]{6}")
     @Column(name = "home_phone")
     private String homePhone;
 
-    @Length(min = 12, max = 12, message = "homePhone length is 12")
-    @Pattern(regexp = "[0-9]{12}", message = "homePhone [0-9]{12}")
+    @NullOrPattern(pattern = "[0-9]{12}", message = "mobilePhone [0-9]{12}")
     @Column(name = "mobile_phone")
     private String mobilePhone;
 
-    @Email(message = "email")
+    @NullOrPattern(pattern =  "^([\\w_\\-\\.])+@[\\w\\-\\.]+\\.([A-Za-z]{2,5})$", message = "email")
     @Column(name = "email")
     private String email;
 
