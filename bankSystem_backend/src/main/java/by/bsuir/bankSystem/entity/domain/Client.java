@@ -24,81 +24,81 @@ public class Client {
     @ToString.Include
     private Integer id;
 
-    @NotNull
-    @NotEmpty()
-    @Pattern(regexp = "[^0-9].")
+    @NotNull(message = "surname required")
+    @NotEmpty(message = "surname not empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "surname [a-zA-Z]+")
     @Column(name = "surname")
     private String surname;
-    @NotNull
-    @NotEmpty()
-    @Pattern(regexp = "[^0-9].")
+    @NotNull(message = "name required")
+    @NotEmpty(message = "name not empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "name [a-zA-Z]+")
     @Column(name = "name")
     private String name;
 
-    @NotNull
-    @NotEmpty
-    @Pattern(regexp = "[^0-9].")
+    @NotNull(message = "lastName required")
+    @NotEmpty(message = "lastName not empty")
+    @Pattern(regexp = "[a-zA-Z]+", message = "lastName [a-zA-Z]+")
     @Column(name = "last_name")
     private String lastName;
 
-    @NotNull
+    @NotNull(message = "dateBirth required")
     @Column(name = "date_birth")
     private Date dateBirth;
 
-    @NotNull
-    @Length(min = 2, max = 2)
-    @Pattern(regexp = "[A-Z]{2}")
+    @NotNull(message = "partPassport required")
+    @Length(min = 2, max = 2, message = "partPassport length is 2")
+    @Pattern(regexp = "[A-Z]{2}", message = "lastName [A-Z]{2}")
     @Column(name = "part_passport")
     private String partPassport;
 
-    @NotNull
-    @Length(min = 7, max = 7)
-    @Pattern(regexp = "[0-9]{7}")
+    @NotNull(message = "numberPassport required")
+    @Length(min = 7, max = 7, message = "numberPassport length is 7")
+    @Pattern(regexp = "[0-9]{7}", message = "numberPassport [0-9]{7}")
     @Column(name = "number_passport")
     private String numberPassport;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "sourcePassport required")
+    @NotEmpty(message = "sourcePassport not empty")
     @Column(name = "source_passport")
     private String sourcePassport;
 
-    @NotNull
+    @NotNull(message = "startDatePassport required")
     @Column(name = "start_date_passport")
     private Date startDatePassport;
 
-    @NotNull
-    @NotEmpty
-    @Length(min = 14, max = 14)
-    @Pattern(regexp = "[0-9]{7}[A-Z]{1}[0-9]{3}[A-Z]{2}[0-9]{1}")
+    @NotNull(message = "identifierNumberPassport required")
+    @NotEmpty(message = "identifierNumberPassport not empty")
+    @Length(min = 14, max = 14, message = "numberPassport length is 14")
+    @Pattern(regexp = "[0-9]{7}[A-Z]{1}[0-9]{3}[A-Z]{2}[0-9]{1}", message = "identifierNumberPassport [0-9]{7}[A-Z]{1}[0-9]{3}[A-Z]{2}[0-9]{1}")
     @Column(name = "identifier_number_passport")
     private String identifierNumberPassport;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "placeBirth required")
+    @NotEmpty(message = "placeBirth not empty")
     @Column(name = "place_birth")
     private String placeBirth;
 
-    @NotNull
+    @NotNull(message = "cityLive required")
     @ManyToOne
     @JoinColumn(name = "city_live_id", referencedColumnName = "id")
     private City cityLive;
 
-    @NotNull
-    @NotEmpty
+    @NotNull(message = "address required")
+    @NotEmpty(message = "address not empty")
     @Column(name = "address")
     private String address;
 
-    @Length(min = 6, max = 6)
-    @Pattern(regexp = "[0-9]{6}")
+    @Length(min = 6, max = 6, message = "homePhone length is 6")
+    @Pattern(regexp = "[0-9]{6}", message = "homePhone [0-9]{6}")
     @Column(name = "home_phone")
     private String homePhone;
 
-    @Length(min = 12, max = 12)
-    @Pattern(regexp = "[0-9]{12}")
+    @Length(min = 12, max = 12, message = "homePhone length is 12")
+    @Pattern(regexp = "[0-9]{12}", message = "homePhone [0-9]{12}")
     @Column(name = "mobile_phone")
     private String mobilePhone;
 
-    @Email
+    @Email(message = "email")
     @Column(name = "email")
     private String email;
 
@@ -108,27 +108,27 @@ public class Client {
     @Column(name = "position")
     private String position;
 
-    @NotNull
+    @NotNull(message = "cityRegistration required")
     @ManyToOne
     @JoinColumn(name = "city_registration_id", referencedColumnName = "id")
     private City cityRegistration;
 
-    @NotNull
+    @NotNull(message = "familyStatus required")
     @ManyToOne
     @JoinColumn(name = "family_status_id", referencedColumnName = "id")
     private FamilyStatus familyStatus;
 
-    @NotNull
+    @NotNull(message = "nationality required")
     @ManyToOne
     @JoinColumn(name = "nationality_id", referencedColumnName = "id")
     private Nationality nationality;
 
-    @NotNull
+    @NotNull(message = "disability required")
     @ManyToOne
     @JoinColumn(name = "disability_id", referencedColumnName = "id")
     private Disability disability;
 
-    @NotNull
+    @NotNull(message = "isPensioner required")
     @Column(name = "is_pensioner")
     private Boolean isPensioner;
 

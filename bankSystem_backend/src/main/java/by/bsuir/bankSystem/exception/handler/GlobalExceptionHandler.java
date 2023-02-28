@@ -8,6 +8,10 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
+import javax.validation.ConstraintViolationException;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 @RestControllerAdvice
 public class GlobalExceptionHandler {
 
@@ -20,6 +24,11 @@ public class GlobalExceptionHandler {
     @ResponseStatus(code = HttpStatus.BAD_REQUEST)
     @ExceptionHandler({BadRequestException.class})
     public MessageDto badRequest(RuntimeException e) {
+        Pattern pattern = Pattern.compile("interpolatedMessage='([^']+)'");
+        Matcher matcher = pattern.matcher(e.getMessage());
+        if (matcher.find()) {
+            return new MessageDto(matcher.group(1));
+        }
         return new MessageDto(e.getMessage());
     }
 }

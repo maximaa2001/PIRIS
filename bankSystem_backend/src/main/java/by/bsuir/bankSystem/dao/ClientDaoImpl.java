@@ -1,9 +1,11 @@
 package by.bsuir.bankSystem.dao;
 
 import by.bsuir.bankSystem.entity.domain.Client;
+import by.bsuir.bankSystem.exception.BadRequestException;
 import by.bsuir.bankSystem.repo.ClientRepo;
 import org.springframework.stereotype.Component;
 
+import javax.validation.ConstraintViolationException;
 import java.util.Optional;
 
 @Component
@@ -16,7 +18,11 @@ public class ClientDaoImpl implements ClientDao {
 
     @Override
     public void save(Client client) {
-        clientRepo.save(client);
+        try {
+            clientRepo.save(client);
+        } catch (ConstraintViolationException e) {
+            throw new BadRequestException(e.getMessage());
+        }
     }
 
     @Override

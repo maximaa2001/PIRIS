@@ -60,7 +60,7 @@ public class ClientServiceImpl implements ClientService {
                 .nationality(nationality)
                 .disability(disability)
                 .isPensioner(clientDto.getIsPensioner())
-                .salaryMonth(new BigDecimal(clientDto.getSalaryMonth().trim()))
+                .salaryMonth((clientDto.getSalaryMonth() != null && !clientDto.getSalaryMonth().trim().isEmpty()) ? new BigDecimal(clientDto.getSalaryMonth()) : null)
                 .build();
 
     }
