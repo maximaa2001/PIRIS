@@ -4,6 +4,8 @@ import by.bsuir.bankSystem.dao.ClientDao;
 import by.bsuir.bankSystem.dao.RefDao;
 import by.bsuir.bankSystem.entity.domain.*;
 import by.bsuir.bankSystem.entity.dto.client.ClientDto;
+import by.bsuir.bankSystem.entity.dto.client.ClientListDto;
+import by.bsuir.bankSystem.exception.NotFoundException;
 import by.bsuir.bankSystem.util.Validator;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,17 +29,41 @@ public class ClientServiceImpl implements ClientService {
 
     @Override
     public void createClient(ClientDto clientDto) {
-        clientDao.save(defaultClient(clientDto));
+        clientDao.save(defaultClient(clientDto, false));
     }
 
-    private Client defaultClient(ClientDto clientDto) {
+    @Override
+    public ClientListDto getClients() {
+        return ClientListDto.of(clientDao.findClients());
+    }
+
+    @Override
+    public ClientDto getClient(Integer id) {
+        return ClientDto.of(clientDao.findById(id).orElseThrow(NotFoundException::new));
+    }
+
+    @Override
+    public void deleteClient(Integer id) {
+        clientDao.findById(id).orElseThrow(NotFoundException::new);
+        clientDao.delete(id);
+    }
+
+    @Override
+    public void updateClient(ClientDto clientDto) {
+        clientDao.save(defaultClient(clientDto, true));
+    }
+
+    private Client defaultClient(ClientDto clientDto, boolean isUpdate) {
         City cityLive = refDao.findCityById(clientDto.getCityLiveId());
         City cityRegistration = refDao.findCityById(clientDto.getCityRegistrationId());
         FamilyStatus familyStatus = refDao.findFamilyStatusById(clientDto.getFamilyStatusId());
         Nationality nationality = refDao.findNationalityById(clientDto.getNationalityId());
         Disability disability = refDao.findDisabilityById(clientDto.getDisabilityId());
-        validate(clientDto);
+        if(!isUpdate) {
+            validate(clientDto);
+        }
         return Client.builder()
+                .id(isUpdate ? clientDto.getId() : null)
                 .surname(clientDto.getSurname().trim())
                 .name(clientDto.getName().trim())
                 .lastName(clientDto.getLastName().trim())

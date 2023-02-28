@@ -1,13 +1,13 @@
 package by.bsuir.bankSystem.rest;
 
 import by.bsuir.bankSystem.entity.dto.client.ClientDto;
+import by.bsuir.bankSystem.entity.dto.client.ClientListDto;
 import by.bsuir.bankSystem.service.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
-import static by.bsuir.bankSystem.constant.ApiPath.CREATE_CLIENT;
+import static by.bsuir.bankSystem.constant.ApiPath.CLIENT;
+import static by.bsuir.bankSystem.constant.ApiPath.CLIENTS;
 
 @RestController
 public class ClientRest {
@@ -18,8 +18,28 @@ public class ClientRest {
         this.clientService = clientService;
     }
 
-    @PostMapping(CREATE_CLIENT)
+    @PostMapping(CLIENT)
     public void createClient(@RequestBody ClientDto clientDto) {
         clientService.createClient(clientDto);
+    }
+
+    @GetMapping(CLIENTS)
+    public ClientListDto getClients() {
+        return clientService.getClients();
+    }
+
+    @GetMapping(CLIENT)
+    public ClientDto getClient(@RequestParam Integer id) {
+        return clientService.getClient(id);
+    }
+
+    @DeleteMapping(CLIENT)
+    public void deleteClient(@RequestParam Integer id) {
+        clientService.deleteClient(id);
+    }
+
+    @PutMapping(CLIENT)
+    public void updateClient(@RequestBody ClientDto clientDto) {
+        clientService.updateClient(clientDto);
     }
 }

@@ -16,6 +16,7 @@ import java.util.Optional;
 @Service
 public class Validator {
     private final ClientDao clientDao;
+    private static final DateFormatter dateFormatter = new DateFormatter("yyyy-MM-dd");
 
     @Autowired
     public Validator(ClientDao clientDao) {
@@ -44,11 +45,14 @@ public class Validator {
     }
 
     public Date validateDate(String date) {
-        DateFormatter dateFormatter = new DateFormatter("yyyy-MM-dd");
         try {
             return dateFormatter.parse(date, Locale.getDefault());
         } catch (ParseException e) {
             throw new BadRequestException("not valid date");
         }
+    }
+
+    public static String dateToString(Date date) {
+        return dateFormatter.print(date, Locale.getDefault());
     }
 }
