@@ -1,9 +1,6 @@
 package by.bsuir.bankSystem.dao;
 
-import by.bsuir.bankSystem.entity.domain.City;
-import by.bsuir.bankSystem.entity.domain.Disability;
-import by.bsuir.bankSystem.entity.domain.FamilyStatus;
-import by.bsuir.bankSystem.entity.domain.Nationality;
+import by.bsuir.bankSystem.entity.domain.*;
 
 import java.util.List;
 
@@ -16,5 +13,7 @@ public interface RefDao {
     Disability findDisabilityById(Integer id);
     FamilyStatus findFamilyStatusById(Integer id);
     Nationality findNationalityById(Integer id);
+    DepositType findDepositTypeById(Integer id);
+    Currency findCurrencyById(String id);
 
 }

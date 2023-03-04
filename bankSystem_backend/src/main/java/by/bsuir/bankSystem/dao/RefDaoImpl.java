@@ -1,14 +1,8 @@
 package by.bsuir.bankSystem.dao;
 
-import by.bsuir.bankSystem.entity.domain.City;
-import by.bsuir.bankSystem.entity.domain.Disability;
-import by.bsuir.bankSystem.entity.domain.FamilyStatus;
-import by.bsuir.bankSystem.entity.domain.Nationality;
+import by.bsuir.bankSystem.entity.domain.*;
 import by.bsuir.bankSystem.exception.NotFoundException;
-import by.bsuir.bankSystem.repo.CityRepo;
-import by.bsuir.bankSystem.repo.DisabilityRepo;
-import by.bsuir.bankSystem.repo.FamilyStatusRepo;
-import by.bsuir.bankSystem.repo.NationalityRepo;
+import by.bsuir.bankSystem.repo.*;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,14 +16,19 @@ public class RefDaoImpl implements RefDao {
     private final DisabilityRepo disabilityRepo;
     private final FamilyStatusRepo familyStatusRepo;
     private final NationalityRepo nationalityRepo;
+    private final DepositTypeRepo depositTypeRepo;
+    private final CurrencyRepo currencyRepo;
 
     @Autowired
     public RefDaoImpl(CityRepo cityRepo, DisabilityRepo disabilityRepo,
-                      FamilyStatusRepo familyStatusRepo, NationalityRepo nationalityRepo) {
+                      FamilyStatusRepo familyStatusRepo, NationalityRepo nationalityRepo,
+                      DepositTypeRepo depositTypeRepo, CurrencyRepo currencyRepo) {
         this.cityRepo = cityRepo;
         this.disabilityRepo = disabilityRepo;
         this.familyStatusRepo = familyStatusRepo;
         this.nationalityRepo = nationalityRepo;
+        this.depositTypeRepo = depositTypeRepo;
+        this.currencyRepo = currencyRepo;
     }
 
     @Override
@@ -70,5 +69,15 @@ public class RefDaoImpl implements RefDao {
     @Override
     public Nationality findNationalityById(Integer id) {
         return nationalityRepo.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public DepositType findDepositTypeById(Integer id) {
+        return depositTypeRepo.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public Currency findCurrencyById(String id) {
+        return currencyRepo.findById(id).orElseThrow(NotFoundException::new);
     }
 }
