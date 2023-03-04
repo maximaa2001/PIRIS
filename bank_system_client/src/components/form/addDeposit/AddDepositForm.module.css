@@ -1,0 +1,83 @@
+.container{
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.date {
+    margin-bottom: 10px;
+    display: flex;
+    white-space: nowrap;
+    padding-left: 10px;
+}
+
+.date label {
+    font-size: 21px;
+}
+
+.number {
+    width: 100%;
+    height: 40px;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid gray; 
+    background-color: white;
+    font-size: 21px;
+    margin-bottom: 10px;
+}
+
+.selectorDiv {
+    display: flex;
+    width: 100%;
+    gap: 200px;
+    align-items: center;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.selectorDiv  label{
+   width: 200px;
+   text-align: left;
+}
+
+.selector{
+    width: 300px;
+}
+
+.checkboxDiv {
+    display: flex;
+    width: 100%;
+    gap: 200px;
+    align-items: center;
+    padding-left: 10px;
+    margin-bottom: 10px;
+}
+
+.checkboxDiv  label{
+    width: 200px;
+    text-align: left;
+}
+
+label{
+    font-size: 21px;
+}
+
+.btnSubmit{
+    height: 50px;
+    cursor: pointer;
+    font-size: 25px;
+    background-color:  rgb(29,31,30);
+    border-color:  rgb(29,31,30);
+    color: white;
+}
+
+.btnSubmit:hover{
+    background-color: #00A25F;
+}
+
+.error{
+    color: red;
+    margin-bottom: 10px;
+}
+
+
