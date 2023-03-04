@@ -3,6 +3,7 @@ package by.bsuir.bankSystem.service;
 import by.bsuir.bankSystem.dao.*;
 import by.bsuir.bankSystem.entity.domain.*;
 import by.bsuir.bankSystem.entity.dto.deposit.DepositDto;
+import by.bsuir.bankSystem.entity.dto.deposit.DepositListDto;
 import by.bsuir.bankSystem.exception.NotFoundException;
 import by.bsuir.bankSystem.util.Validator;
 import lombok.extern.log4j.Log4j2;
@@ -43,6 +44,12 @@ public class DepositServiceImpl implements DepositService {
     }
 
     @Override
+    public DepositListDto findAll() {
+        List<Deposit> allOpenDeposits = depositDao.findAll().stream().filter(Deposit::getIsOpen).collect(Collectors.toList());
+        return DepositListDto.of(allOpenDeposits);
+    }
+
+    @Override
     @Transactional
     public void createDeposit(DepositDto depositDto) {
         Deposit deposit = defaultDeposit(depositDto);
@@ -72,7 +79,10 @@ public class DepositServiceImpl implements DepositService {
         BankAccount bankFondAccount = bankAccountDao.findBankFond();
         BankAccount bankCashAccount = bankAccountDao.findBankCashAccount();
         magicDateDao.save(currentDate);
-        List<Deposit> deposits = depositDao.findAll().stream().filter(Deposit::getIsOpen).sorted(Comparator.comparing(Deposit::getStartDate))
+        List<Deposit> deposits = depositDao.findAll().stream()
+                .filter(Deposit::getIsOpen)
+                .filter(e -> e.getDepositType().getId().equals(1))
+                .sorted(Comparator.comparing(Deposit::getStartDate))
                 .map(deposit -> calculatePercents(deposit, previousDate, currentDate, bankFondAccount, bankCashAccount))
                 .collect(Collectors.toList());
         List<BankAccount> accounts = deposits

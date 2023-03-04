@@ -2,6 +2,7 @@ package by.bsuir.bankSystem.entity.dto.deposit;
 
 import by.bsuir.bankSystem.entity.domain.Client;
 import by.bsuir.bankSystem.entity.domain.Currency;
+import by.bsuir.bankSystem.entity.domain.Deposit;
 import by.bsuir.bankSystem.entity.domain.DepositType;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
@@ -16,7 +17,7 @@ import java.util.Date;
 
 @AllArgsConstructor
 @NoArgsConstructor
-@Getter
+@Data
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
@@ -30,4 +31,11 @@ public class DepositDto {
     private String sum;
     private String percent;
     private Integer client;
+
+    public static DepositDto miniOf(Deposit deposit) {
+        DepositDto depositDto = new DepositDto();
+        depositDto.setSum(deposit.getSum().toString());
+        depositDto.setPercent(deposit.getPercent().toString());
+        return depositDto;
+    }
 }
