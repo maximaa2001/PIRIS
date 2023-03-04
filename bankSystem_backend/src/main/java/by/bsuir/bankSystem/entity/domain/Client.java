@@ -7,6 +7,7 @@ import org.hibernate.validator.constraints.Length;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -38,7 +39,7 @@ public class Client {
 
     @Past(message = "dateBirth is not valid")
     @Column(name = "date_birth")
-    private Date dateBirth;
+    private LocalDate dateBirth;
 
     @Pattern(regexp = "[A-Z]{2}", message = "lastName [A-Z]{2}")
     @Column(name = "part_passport")
@@ -54,7 +55,7 @@ public class Client {
 
     @Past(message = "startDatePassport is not valid")
     @Column(name = "start_date_passport")
-    private Date startDatePassport;
+    private LocalDate startDatePassport;
 
     @Pattern(regexp = "[0-9]{7}[A-Z]{1}[0-9]{3}[A-Z]{2}[0-9]{1}", message = "identifierNumberPassport [0-9]{7}[A-Z]{1}[0-9]{3}[A-Z]{2}[0-9]{1}")
     @Column(name = "identifier_number_passport")

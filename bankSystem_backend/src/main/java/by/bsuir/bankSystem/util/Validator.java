@@ -9,6 +9,8 @@ import org.springframework.format.datetime.DateFormatter;
 import org.springframework.stereotype.Service;
 
 import java.text.ParseException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
@@ -44,9 +46,9 @@ public class Validator {
         }
     }
 
-    public Date validateDate(String date) {
+    public LocalDate validateDate(String date) {
         try {
-            return dateFormatter.parse(date, Locale.getDefault());
+            dateFormatter.parse(date, Locale.getDefault()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } catch (ParseException e) {
             throw new BadRequestException("not valid date");
         }

@@ -8,6 +8,7 @@ import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.Date;
 import java.util.Objects;
 
@@ -45,12 +46,12 @@ public class Deposit {
 
     @NotNull
     @Column(name = "start_date")
-    private Date startDate;
+    private LocalDate startDate;
 
     @NotNull
     @Future
     @Column(name = "endDate")
-    private Date endDate;
+    private LocalDate endDate;
 
     @NotNull
     @Column(name = "sum")
@@ -71,6 +72,9 @@ public class Deposit {
     @OneToOne
     @JoinColumn(name = "percent_account_id", nullable = false)
     private BankAccount percentAccount;
+
+    @Column(name = "is_open")
+    private Boolean isOpen;
 
     @Override
     public boolean equals(Object o) {
