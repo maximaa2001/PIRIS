@@ -50,3 +50,14 @@ export interface ICreateClientData {
     isPensioner : boolean;
     salaryMonth : string;
 }
+
+export interface ICreateDepositData {
+    depositType : number
+    contractNumber : string
+    currency : string
+    startDate: string
+    endDate : string
+    sum : string
+    percent : string
+    client : number
+}

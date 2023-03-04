@@ -1,5 +1,3 @@
-import { useState } from "react"
-import { Modal } from "../../modal/Modal"
 import { Button } from "../Button"
 import { FC } from "react"
 
@@ -14,7 +12,7 @@ export const AddClientButton : FC<IAddClientButton> = ({openModal}) => {
     }
 
     return(
-        <Button onClick={addClientHandler} type={"addClientButton"}>
+        <Button onClick={addClientHandler} type={"addButton"}>
             Add new client
         </Button>
     )

@@ -4,7 +4,7 @@ import React, { useEffect, useState } from 'react';
 import "react-datepicker/dist/react-datepicker.css";
 import MaskedInput from 'react-text-mask'
 import Select from 'react-select';
-import { getRefs } from '../../../service/ApiService';
+import { getClientRefs } from '../../../service/ApiService';
 import { useFormikCreateClient } from '../../../hooks/useFormikCreateClient';
 import { useModal } from '../../../hooks/useModal';
 import { text } from 'stream/consumers';
@@ -71,7 +71,7 @@ export const AddClientForm = () => {
 
 
     useEffect(() => {
-        getRefs().then(item => {
+        getClientRefs().then(item => {
             setAllCities(item.data.cities.map(function(entry) {
                 return {
                     label : entry.name,
