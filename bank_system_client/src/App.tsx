@@ -1,8 +1,9 @@
 import { Route, Routes } from "react-router-dom";
 import { ClientsPage } from "./pages/ClientsPage";
 import './css/Global.css'
-import { Header } from "./components/header/Header";
+import {Header} from './modules/header/header/Header'
 import { DepositsPage } from "./pages/DepositsPage";
+
 
 
 

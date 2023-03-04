@@ -25,7 +25,8 @@ export interface IRef {
     nationalities : INationality[]
 }
 
-export interface ICreateClientData {
+export interface IClientData {
+    id? : number
     surname : string;
     name : string;
     lastName : string;
@@ -51,6 +52,7 @@ export interface ICreateClientData {
     salaryMonth : string;
 }
 
+
 export interface ICreateDepositData {
     depositType : number
     contractNumber : string
@@ -60,4 +62,21 @@ export interface ICreateDepositData {
     sum : string
     percent : string
     client : number
+}
+
+export interface IClientMiniData {
+    id : number
+    surname : string;
+    name : string;
+    lastName : string;
+    partPassport: string;
+    numberPassport : string;
+}
+
+export interface IClientsMiniData {
+    clients : IClientMiniData[]
+}
+
+export interface IData {
+    data : IClientData
 }
