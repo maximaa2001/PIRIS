@@ -3,12 +3,10 @@ package by.bsuir.bankSystem.rest;
 import by.bsuir.bankSystem.entity.dto.deposit.DepositDto;
 import by.bsuir.bankSystem.service.DepositService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import static by.bsuir.bankSystem.constant.ApiPath.DEPOSIT;
-import static by.bsuir.bankSystem.constant.ApiPath.DEPOSITS;
+import static by.bsuir.bankSystem.constant.ApiPath.DEPOSIT_CLOSE;
 
 @RestController
 public class DepositRest {
@@ -22,5 +20,10 @@ public class DepositRest {
     @PostMapping(DEPOSIT)
     public void createDeposit(@RequestBody DepositDto depositDto) {
         depositService.createDeposit(depositDto);
+    }
+
+    @GetMapping(DEPOSIT_CLOSE)
+    public void closeDay(@RequestParam Integer monthAmount) {
+        depositService.closeDay(monthAmount);
     }
 }

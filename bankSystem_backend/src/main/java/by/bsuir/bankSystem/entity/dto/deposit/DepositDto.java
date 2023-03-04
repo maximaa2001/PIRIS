@@ -21,13 +21,13 @@ import java.util.Date;
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
 public class DepositDto {
-    private Integer depositTypeId;
+    private Integer depositType;
     private Integer contractNumber;
-    private String iso;
+    private String currency;
     private Integer contractTerm;
     private String startDate;
     private String endDate;
     private String sum;
-    private Double percent;
-    private Integer clientId;
+    private String percent;
+    private Integer client;
 }

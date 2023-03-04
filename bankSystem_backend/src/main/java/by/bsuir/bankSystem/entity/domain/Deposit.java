@@ -22,53 +22,52 @@ import java.util.Objects;
 public class Deposit {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ToString.Include
     private Integer id;
 
     @ManyToOne
+    @NotNull(message = "depositType not empty")
     @JoinColumn(name = "deposit_type", referencedColumnName = "id")
     private DepositType depositType;
 
-    @NotNull
-    @Pattern(regexp = "[0-9]{13}")
+    @NotNull(message = "contractNumber not empty")
     @Column(name = "contract_number")
     private Integer contractNumber;
 
-    @NotNull
+    @NotNull(message = "currency not empty")
     @ManyToOne
-    @JoinColumn(name = "currency_iso", referencedColumnName = "id")
+    @JoinColumn(name = "currency_iso", referencedColumnName = "iso")
     private Currency currency;
 
-    @NotNull
-    @Column(name = "contract_term")
-    private Integer contractTerm;
-
-    @NotNull
+    @NotNull(message = "startDate not empty")
     @Column(name = "start_date")
     private LocalDate startDate;
 
-    @NotNull
-    @Future
+    @NotNull(message = "endDate not empty")
+    @Future(message = "endDate future")
     @Column(name = "endDate")
     private LocalDate endDate;
 
-    @NotNull
+    @NotNull(message = "sum not empty")
     @Column(name = "sum")
     private BigDecimal sum;
 
-    @NotNull
     @Column(name = "percent")
     private Double percent;
 
-    @NotNull
+    @NotNull(message = "client not empty")
     @ManyToOne
     @JoinColumn(name = "client_id", referencedColumnName = "id")
     private Client client;
+
+    @NotNull
     @OneToOne
     @JoinColumn(name = "current_account_id", nullable = false)
     private BankAccount currentAccount;
 
+    @NotNull
     @OneToOne
     @JoinColumn(name = "percent_account_id", nullable = false)
     private BankAccount percentAccount;

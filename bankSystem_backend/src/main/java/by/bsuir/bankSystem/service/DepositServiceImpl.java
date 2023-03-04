@@ -21,7 +21,6 @@ import java.util.stream.Collectors;
 @Service
 @Log4j2
 public class DepositServiceImpl implements DepositService {
-    private static final BigDecimal PERCENT_SCALE_VALUE = BigDecimal.valueOf(10 * 100);
     private final DepositDao depositDao;
     private final BankAccountDao bankAccountDao;
     private final RefDao refDao;
@@ -87,7 +86,7 @@ public class DepositServiceImpl implements DepositService {
 
     private Deposit calculatePercents(Deposit deposit, LocalDate previousDate, LocalDate currentDate,
                                       BankAccount bankFundAccount, BankAccount bankCashAccount) {
-        BigDecimal monthPercents = BigDecimal.valueOf(deposit.getPercent()).divide(PERCENT_SCALE_VALUE, RoundingMode.DOWN)
+        BigDecimal monthPercents = BigDecimal.valueOf(deposit.getPercent()).divide(BigDecimal.valueOf(100))
                 .multiply(deposit.getSum())
                 .divide(BigDecimal.valueOf(12), RoundingMode.HALF_EVEN);
 
@@ -133,17 +132,17 @@ public class DepositServiceImpl implements DepositService {
 
 
     private Deposit defaultDeposit(DepositDto depositDto) {
-        DepositType depositType = refDao.findDepositTypeById(depositDto.getDepositTypeId());
-        Currency currency = refDao.findCurrencyById(depositDto.getIso());
-        Client client = clientDao.findById(depositDto.getClientId()).orElseThrow(NotFoundException::new);
+        DepositType depositType = refDao.findDepositTypeById(depositDto.getDepositType());
+        Currency currency = refDao.findCurrencyById(depositDto.getCurrency());
+        Client client = clientDao.findById(depositDto.getClient()).orElseThrow(NotFoundException::new);
         return Deposit.builder()
                 .depositType(depositType)
                 .contractNumber(depositDto.getContractNumber())
                 .currency(currency)
-                .contractTerm(depositDto.getContractTerm())
                 .startDate(validator.validateDate(depositDto.getStartDate().trim()))
                 .endDate(validator.validateDate(depositDto.getEndDate().trim()))
                 .sum((depositDto.getSum() != null && !depositDto.getSum().trim().isEmpty()) ? new BigDecimal(depositDto.getSum()) : null)
+                .percent(Double.valueOf(depositDto.getPercent()))
                 .client(client)
                 .isOpen(true)
                 .build();

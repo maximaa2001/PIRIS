@@ -12,7 +12,7 @@ import javax.validation.constraints.NotNull;
 import java.util.Objects;
 
 @Entity
-@Table(name = "deposit_type_ref")
+@Table(name = "currency_ref")
 @Getter
 @ToString(onlyExplicitlyIncluded = true)
 public class Currency {

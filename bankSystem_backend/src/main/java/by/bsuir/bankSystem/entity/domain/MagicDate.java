@@ -4,10 +4,7 @@ import lombok.Data;
 import lombok.Getter;
 import lombok.ToString;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.time.LocalDate;
 
 @Entity
@@ -18,6 +15,7 @@ import java.time.LocalDate;
 public class MagicDate {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ToString.Include
     private Integer id;

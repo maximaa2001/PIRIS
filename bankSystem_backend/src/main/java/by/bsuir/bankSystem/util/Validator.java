@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 import java.text.ParseException;
 import java.time.LocalDate;
 import java.time.ZoneId;
+import java.time.format.DateTimeFormatter;
 import java.util.Date;
 import java.util.Locale;
 import java.util.Optional;
@@ -19,6 +20,7 @@ import java.util.Optional;
 public class Validator {
     private final ClientDao clientDao;
     private static final DateFormatter dateFormatter = new DateFormatter("yyyy-MM-dd");
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
     @Autowired
     public Validator(ClientDao clientDao) {
@@ -48,13 +50,13 @@ public class Validator {
 
     public LocalDate validateDate(String date) {
         try {
-            dateFormatter.parse(date, Locale.getDefault()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
+            return dateFormatter.parse(date, Locale.getDefault()).toInstant().atZone(ZoneId.systemDefault()).toLocalDate();
         } catch (ParseException e) {
             throw new BadRequestException("not valid date");
         }
     }
 
-    public static String dateToString(Date date) {
-        return dateFormatter.print(date, Locale.getDefault());
+    public static String dateToString(LocalDate date) {
+        return date.format(formatter);
     }
 }

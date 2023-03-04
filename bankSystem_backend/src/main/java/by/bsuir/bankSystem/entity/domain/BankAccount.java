@@ -2,10 +2,7 @@ package by.bsuir.bankSystem.entity.domain;
 
 import lombok.*;
 
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
+import javax.persistence.*;
 import java.math.BigDecimal;
 import java.util.Objects;
 
@@ -19,6 +16,7 @@ import java.util.Objects;
 public class BankAccount {
 
     @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id")
     @ToString.Include
     private Integer id;

@@ -52,6 +52,16 @@ public class RefDaoImpl implements RefDao {
     }
 
     @Override
+    public List<DepositType> findAllDepositTypes() {
+        return depositTypeRepo.findAll();
+    }
+
+    @Override
+    public List<Currency> findAllCurrencies() {
+        return currencyRepo.findAll();
+    }
+
+    @Override
     public City findCityById(Integer id) {
         return cityRepo.findById(id).orElseThrow(NotFoundException::new);
     }

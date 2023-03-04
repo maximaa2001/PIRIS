@@ -26,7 +26,7 @@ public class MagicDateService {
     public MagicDate getDate() {
         List<MagicDate> magicDates = magicDateDao.findAll();
         if (magicDates.isEmpty()) {
-            return magicDateDao.save(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 0));
+            return magicDateDao.save(LocalDate.of(LocalDate.now().getYear(), LocalDate.now().getMonth(), 1));
         } else {
             return magicDates.stream().sorted(Comparator.comparing(MagicDate::getDate)).collect(Collectors.toList()).get(0);
         }

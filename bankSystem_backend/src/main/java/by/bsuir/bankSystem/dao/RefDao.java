@@ -9,6 +9,8 @@ public interface RefDao {
     List<Disability> findAllDisabilities();
     List<FamilyStatus> findAllFamilyStatuses();
     List<Nationality> findAllNationalities();
+    List<DepositType> findAllDepositTypes();
+    List<Currency> findAllCurrencies();
     City findCityById(Integer id);
     Disability findDisabilityById(Integer id);
     FamilyStatus findFamilyStatusById(Integer id);
