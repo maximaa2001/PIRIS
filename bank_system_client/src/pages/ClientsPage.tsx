@@ -23,8 +23,6 @@ export const ClientsPage =() =>  {
         globalStore.setUpdatedId(null)
     }
 
-
-
     return(
         <section className={s.container}>
             <AddClientButton openModal={openModal}/>

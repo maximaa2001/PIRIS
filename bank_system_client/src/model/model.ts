@@ -80,3 +80,13 @@ export interface IClientsMiniData {
 export interface IData {
     data : IClientData
 }
+
+export interface IDepositMiniData {
+    id : number
+    sum: string
+    persent : number
+}
+
+export interface IDepositsMiniData {
+    deposits : IDepositMiniData[]
+}

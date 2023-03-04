@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IClientData, IClientsMiniData, IRef } from "../model/model";
+import { IClientData, IClientsMiniData, IDepositMiniData, IDepositsMiniData, IRef } from "../model/model";
 
 
 
@@ -17,6 +17,10 @@ export async function getDepositRefs() {
     } catch(err) {
         console.error(err)
     } 
+}
+
+export async function getDeposits() {
+    return (await axios.get<IDepositsMiniData>("http://localhost:8100/deposits")).data
 }
 
 
