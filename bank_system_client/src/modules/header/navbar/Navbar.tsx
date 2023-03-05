@@ -2,7 +2,8 @@ import s from './Navbar.module.css'
 
 const mapNavigationLink = [
     ['/', 'Clients'],
-    ['/deposits', 'Deposits']
+    ['/deposits', 'Deposits'],
+    ['/credits', 'Credits']
 ]
 
 export const Navbar = () => {

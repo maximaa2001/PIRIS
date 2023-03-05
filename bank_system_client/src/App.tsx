@@ -3,9 +3,7 @@ import { ClientsPage } from "./pages/ClientsPage";
 import './css/Global.css'
 import {Header} from './modules/header/header/Header'
 import { DepositsPage } from "./pages/DepositsPage";
-
-
-
+import { CreditsPage } from "./pages/CreditsPage";
 
 
 function App() {
@@ -16,6 +14,7 @@ function App() {
         <Routes>
            <Route path={"/"} element={<ClientsPage/>}/>
            <Route path={"/deposits"} element={<DepositsPage/>}/>
+           <Route path={"/credits"} element={<CreditsPage/>}/>
         </Routes>
     </main>
     </div>

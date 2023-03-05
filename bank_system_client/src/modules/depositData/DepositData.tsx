@@ -7,14 +7,17 @@ interface IData {
 }
 
 
-export const DeposiatData : FC<IData> = ({deposit}) => {
+export const DepositData : FC<IData> = ({deposit}) => {
+
 
     return(
         <div className={s.wrapper}>
+            
             <div className={s.nameWrapper}>
                 <span>{deposit.id}</span>
+                <span>{deposit.depositName}</span>
                 <span>{deposit.sum}</span>
-                <span>{deposit.persent}</span>
+                <span>{deposit.percent}</span>
             </div>
         </div>
     )

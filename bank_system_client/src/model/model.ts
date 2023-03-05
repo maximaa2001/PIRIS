@@ -64,6 +64,17 @@ export interface ICreateDepositData {
     client : number
 }
 
+export interface ICreateCreditData {
+    creditType : number
+    contractNumber : string
+    currency : string
+    startDate: string
+    endDate : string
+    sum : string
+    percent : string
+    client : number
+}
+
 export interface IClientMiniData {
     id : number
     surname : string;
@@ -84,9 +95,22 @@ export interface IData {
 export interface IDepositMiniData {
     id : number
     sum: string
-    persent : number
+    percent : number
+    depositName : string
 }
 
 export interface IDepositsMiniData {
     deposits : IDepositMiniData[]
 }
+
+export interface ICreditMiniData {
+    id : number
+    sum: string
+    percent : number
+    creditName : string
+}
+
+export interface ICreditsMiniData {
+    credits : ICreditMiniData[]
+}
+

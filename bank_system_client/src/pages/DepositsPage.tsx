@@ -5,7 +5,7 @@ import s from './style/ClientsPage.module.css'
 import { useEffect, useState } from "react"
 import { IDepositMiniData } from "../model/model"
 import { getDeposits } from "../service/ApiService"
-import { DeposiatData } from "../modules/depositData/DepositData"
+import { DepositData } from "../modules/depositData/DepositData"
 
 export const DepositsPage =() =>  {
     const {isModal, openModal, closeModal} = useModal()
@@ -21,7 +21,7 @@ export const DepositsPage =() =>  {
              <AddDepositButton openModal={openModal}/>
              <div className={s.dataWrapper}>
                 {deposits.map((item : IDepositMiniData) => (
-                    <DeposiatData key={item.id} deposit={item}/>
+                    <DepositData key={item.id} deposit={item}/>
                 ))}
             </div>
              {isModal && <AddDepositModal closeModal={closeModal}/>}

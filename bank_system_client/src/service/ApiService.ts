@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IClientData, IClientsMiniData, IDepositMiniData, IDepositsMiniData, IRef } from "../model/model";
+import { IClientData, IClientsMiniData, ICreditsMiniData, IDepositMiniData, IDepositsMiniData, IRef } from "../model/model";
 
 
 
@@ -19,13 +19,29 @@ export async function getDepositRefs() {
     } 
 }
 
+export async function getCreditRefs() {
+    try{
+        return (await axios.get("http://localhost:8100/credit/ref"))
+    } catch(err) {
+        console.error(err)
+    } 
+}
+
 export async function getDeposits() {
     return (await axios.get<IDepositsMiniData>("http://localhost:8100/deposits")).data
 }
 
+export async function getCredits() {
+    return (await axios.get<ICreditsMiniData>("http://localhost:8100/credits")).data
+}
 
-export async function createDeposit(data ) {
+
+export async function createDeposit(data) {
     return (await axios.post<IRef>("http://localhost:8100/deposit", data)).data
+}
+
+export async function createCredit(data) {
+    return (await axios.post<IRef>("http://localhost:8100/credit", data)).data
 
 }
 
