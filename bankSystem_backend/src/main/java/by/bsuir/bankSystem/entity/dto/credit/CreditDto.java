@@ -1,6 +1,8 @@
-package by.bsuir.bankSystem.entity.dto.deposit;
+package by.bsuir.bankSystem.entity.dto.credit;
 
+import by.bsuir.bankSystem.entity.domain.Credit;
 import by.bsuir.bankSystem.entity.domain.Deposit;
+import by.bsuir.bankSystem.entity.dto.deposit.DepositDto;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import lombok.AllArgsConstructor;
@@ -14,8 +16,8 @@ import lombok.NoArgsConstructor;
 @Builder
 @JsonIgnoreProperties(ignoreUnknown = true)
 @JsonInclude(JsonInclude.Include.NON_NULL)
-public class DepositDto {
-    private Integer depositType;
+public class CreditDto {
+    private Integer creditType;
     private Integer contractNumber;
     private String currency;
     private String startDate;
@@ -23,13 +25,13 @@ public class DepositDto {
     private String sum;
     private String percent;
     private Integer client;
-    private String depositName;
+    private String creditName;
 
-    public static DepositDto miniOf(Deposit deposit) {
-        DepositDto depositDto = new DepositDto();
-        depositDto.setSum(deposit.getSum().toString());
-        depositDto.setPercent(deposit.getPercent().toString());
-        depositDto.setDepositName(deposit.getDepositType().getName());
-        return depositDto;
+    public static CreditDto miniOf(Credit credit) {
+        CreditDto creditDto = new CreditDto();
+        creditDto.setSum(credit.getSum().toString());
+        creditDto.setPercent(credit.getPercent().toString());
+        creditDto.setCreditName(creditDto.getCreditName());
+        return creditDto;
     }
 }

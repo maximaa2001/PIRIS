@@ -23,6 +23,7 @@ import java.util.stream.Collectors;
 @Log4j2
 public class DepositServiceImpl implements DepositService {
     private final DepositDao depositDao;
+    private final CreditDao creditDao;
     private final BankAccountDao bankAccountDao;
     private final RefDao refDao;
     private final ClientDao clientDao;
@@ -31,10 +32,11 @@ public class DepositServiceImpl implements DepositService {
     private final MagicDateDao magicDateDao;
 
     @Autowired
-    public DepositServiceImpl(DepositDao depositDao, BankAccountDao bankAccountDao, RefDao refDao,
+    public DepositServiceImpl(DepositDao depositDao, CreditDao creditDao, BankAccountDao bankAccountDao, RefDao refDao,
                               Validator validator, ClientDao clientDao, MagicDateService magicDateService,
                               MagicDateDao magicDateDao) {
         this.depositDao = depositDao;
+        this.creditDao = creditDao;
         this.bankAccountDao = bankAccountDao;
         this.refDao = refDao;
         this.clientDao = clientDao;
@@ -92,6 +94,17 @@ public class DepositServiceImpl implements DepositService {
         accounts.addAll(List.of(bankCashAccount, bankFondAccount));
         bankAccountDao.saveAllAccounts(accounts);
         depositDao.saveAllDeposits(deposits);
+        List<Credit> credits = creditDao.findAll().stream()
+                .filter(Credit::getIsOpen)
+                .map(credit -> calculatePercents(credit, previousDate, currentDate, bankFondAccount, bankCashAccount))
+                .collect(Collectors.toList());
+        accounts = credits
+                .stream()
+                .map(credit -> List.of(credit.getCurrentAccount(), credit.getPercentAccount()))
+                .flatMap(java.util.Collection::stream).collect(Collectors.toList());
+        accounts.addAll(List.of(bankCashAccount, bankFondAccount));
+        bankAccountDao.saveAllAccounts(accounts);
+        creditDao.saveAllCredits(credits);
     }
 
     private Deposit calculatePercents(Deposit deposit, LocalDate previousDate, LocalDate currentDate,
@@ -126,6 +139,39 @@ public class DepositServiceImpl implements DepositService {
         return deposit;
     }
 
+    private Credit calculatePercents(Credit credit, LocalDate previousDate, LocalDate currentDate,
+                                     BankAccount bankFundAccount, BankAccount bankCashAccount) {
+        BigDecimal monthPercents = BigDecimal.valueOf(credit.getPercent()).divide(BigDecimal.valueOf(100))
+                .multiply(credit.getSum())
+                .divide(BigDecimal.valueOf(12), RoundingMode.HALF_EVEN);
+
+        LocalDate startDate = previousDate.isAfter(credit.getStartDate())
+                ? previousDate
+                : credit.getStartDate();
+        LocalDate endDate = currentDate.isAfter(credit.getEndDate())
+                ? credit.getEndDate()
+                : currentDate;
+        Period period = Period.between(startDate, endDate);
+        int months = (int) period.toTotalMonths();
+
+        BigDecimal percentMoney = monthPercents.multiply(BigDecimal.valueOf(months));
+
+        bankFundAccount.setCredit(bankFundAccount.getCredit().add(percentMoney));
+
+        BankAccount percentAccount = credit.getPercentAccount();
+        percentAccount.setCredit(percentAccount.getCredit().subtract(percentMoney));
+        percentAccount.setDebit(percentAccount.getDebit().add(percentMoney));
+
+        bankCashAccount.setDebit(bankCashAccount.getDebit().add(percentMoney));
+        bankCashAccount.setCredit(bankCashAccount.getCredit().subtract(percentMoney));
+
+        if (credit.getEndDate().isBefore(currentDate) || credit.getEndDate().isEqual(currentDate)) {
+            closeCredit(credit, bankCashAccount, bankFundAccount);
+        }
+        return credit;
+    }
+
+
     private void closeDeposit(Deposit deposit, BankAccount bankCashAccount, BankAccount bankFundAccount) {
         BigDecimal depositSum = deposit.getSum();
         bankFundAccount.setDebit(bankFundAccount.getDebit().subtract(depositSum));
@@ -138,6 +184,21 @@ public class DepositServiceImpl implements DepositService {
         bankCashAccount.setCredit(bankCashAccount.getCredit().subtract(depositSum));
 
         deposit.setIsOpen(false);
+    }
+
+    private void closeCredit(Credit credit, BankAccount bankCashAccount, BankAccount bankFundAccount) {
+        BigDecimal depositSum = credit.getSum();
+
+        bankCashAccount.setDebit(bankCashAccount.getDebit().add(depositSum));
+        bankCashAccount.setCredit(bankCashAccount.getCredit().subtract(depositSum));
+
+        bankFundAccount.setCredit(bankFundAccount.getCredit().add(depositSum));
+
+        BankAccount currentAccount = credit.getCurrentAccount();
+        currentAccount.setDebit(currentAccount.getDebit().add(depositSum));
+        currentAccount.setCredit(currentAccount.getCredit().subtract(depositSum));
+
+        credit.setIsOpen(false);
     }
 
 

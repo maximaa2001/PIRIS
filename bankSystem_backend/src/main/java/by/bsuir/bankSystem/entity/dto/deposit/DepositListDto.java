@@ -1,9 +1,6 @@
 package by.bsuir.bankSystem.entity.dto.deposit;
 
-import by.bsuir.bankSystem.entity.domain.Client;
 import by.bsuir.bankSystem.entity.domain.Deposit;
-import by.bsuir.bankSystem.entity.dto.client.ClientDto;
-import by.bsuir.bankSystem.entity.dto.client.ClientListDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;

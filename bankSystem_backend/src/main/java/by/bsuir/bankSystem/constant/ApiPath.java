@@ -9,4 +9,6 @@ public final class ApiPath {
     public static final String DEPOSITS = "/deposits";
     public static final String DEPOSIT = "/deposit";
     public static final String DEPOSIT_CLOSE = "/deposit/close";
+
+    public static final String CREDIT = "/credit";
 }

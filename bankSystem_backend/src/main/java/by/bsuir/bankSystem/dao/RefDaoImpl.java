@@ -18,17 +18,20 @@ public class RefDaoImpl implements RefDao {
     private final NationalityRepo nationalityRepo;
     private final DepositTypeRepo depositTypeRepo;
     private final CurrencyRepo currencyRepo;
+    private final CreditTypeRepo creditTypeRepo;
 
     @Autowired
     public RefDaoImpl(CityRepo cityRepo, DisabilityRepo disabilityRepo,
                       FamilyStatusRepo familyStatusRepo, NationalityRepo nationalityRepo,
-                      DepositTypeRepo depositTypeRepo, CurrencyRepo currencyRepo) {
+                      DepositTypeRepo depositTypeRepo, CurrencyRepo currencyRepo,
+                      CreditTypeRepo creditTypeRepo) {
         this.cityRepo = cityRepo;
         this.disabilityRepo = disabilityRepo;
         this.familyStatusRepo = familyStatusRepo;
         this.nationalityRepo = nationalityRepo;
         this.depositTypeRepo = depositTypeRepo;
         this.currencyRepo = currencyRepo;
+        this.creditTypeRepo = creditTypeRepo;
     }
 
     @Override
@@ -54,6 +57,11 @@ public class RefDaoImpl implements RefDao {
     @Override
     public List<DepositType> findAllDepositTypes() {
         return depositTypeRepo.findAll();
+    }
+
+    @Override
+    public List<CreditType> findAllCreditTypes() {
+        return creditTypeRepo.findAll();
     }
 
     @Override
@@ -84,6 +92,11 @@ public class RefDaoImpl implements RefDao {
     @Override
     public DepositType findDepositTypeById(Integer id) {
         return depositTypeRepo.findById(id).orElseThrow(NotFoundException::new);
+    }
+
+    @Override
+    public CreditType findCreditTypeById(Integer id) {
+        return creditTypeRepo.findById(id).orElseThrow(NotFoundException::new);
     }
 
     @Override
