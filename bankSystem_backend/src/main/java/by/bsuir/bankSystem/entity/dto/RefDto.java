@@ -2,16 +2,17 @@ package by.bsuir.bankSystem.entity.dto;
 
 import by.bsuir.bankSystem.entity.dto.city.CityDto;
 import by.bsuir.bankSystem.entity.dto.client.ClientDto;
+import by.bsuir.bankSystem.entity.dto.creditType.CreditTypeDto;
 import by.bsuir.bankSystem.entity.dto.currency.CurrencyDto;
 import by.bsuir.bankSystem.entity.dto.depositType.DepositTypeDto;
 import by.bsuir.bankSystem.entity.dto.disability.DisabilityDto;
 import by.bsuir.bankSystem.entity.dto.familyStatus.FamilyStatusDto;
 import by.bsuir.bankSystem.entity.dto.nationality.NationalityDto;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @NoArgsConstructor
@@ -23,6 +24,7 @@ public class RefDto {
     private List<FamilyStatusDto> familyStatuses;
     private List<NationalityDto> nationalities;
     private List<DepositTypeDto> depositTypes;
+    private List<CreditTypeDto> creditTypes;
     private List<CurrencyDto> currencies;
     private List<ClientDto> clients;
 
@@ -33,8 +35,14 @@ public class RefDto {
         this.nationalities = nationalities;
     }
 
-    public RefDto(List<DepositTypeDto> depositTypes, List<CurrencyDto> currencies, List<ClientDto> clients) {
+    public RefDto(ArrayList<DepositTypeDto> depositTypes, List<CurrencyDto> currencies, List<ClientDto> clients) {
         this.depositTypes = depositTypes;
+        this.currencies = currencies;
+        this.clients = clients;
+    }
+
+    public RefDto(List<CreditTypeDto> creditTypes, List<CurrencyDto> currencies, List<ClientDto> clients) {
+        this.creditTypes = creditTypes;
         this.currencies = currencies;
         this.clients = clients;
     }

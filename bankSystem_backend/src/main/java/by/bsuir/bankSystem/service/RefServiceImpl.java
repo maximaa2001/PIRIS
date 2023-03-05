@@ -6,6 +6,7 @@ import by.bsuir.bankSystem.entity.domain.*;
 import by.bsuir.bankSystem.entity.dto.RefDto;
 import by.bsuir.bankSystem.entity.dto.city.CityDto;
 import by.bsuir.bankSystem.entity.dto.client.ClientDto;
+import by.bsuir.bankSystem.entity.dto.creditType.CreditTypeDto;
 import by.bsuir.bankSystem.entity.dto.currency.CurrencyDto;
 import by.bsuir.bankSystem.entity.dto.depositType.DepositTypeDto;
 import by.bsuir.bankSystem.entity.dto.disability.DisabilityDto;
@@ -16,6 +17,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -49,7 +51,17 @@ public class RefServiceImpl implements RefService {
         List<DepositType> allDepositTypes = refDao.findAllDepositTypes();
         List<Currency> allCurrencies = refDao.findAllCurrencies();
         List<Client> allClients = clientDao.findClients();
-        return new RefDto(allDepositTypes.stream().map(DepositTypeDto::of).collect(Collectors.toList()),
+        return new RefDto(new ArrayList<>(allDepositTypes.stream().map(DepositTypeDto::of).collect(Collectors.toList())),
+                allCurrencies.stream().map(CurrencyDto::of).collect(Collectors.toList()),
+                allClients.stream().map(ClientDto::of).collect(Collectors.toList()));
+    }
+
+    @Override
+    public RefDto getAllCreditReferences() {
+        List<CreditType> allCreditTypes = refDao.findAllCreditTypes();
+        List<Currency> allCurrencies = refDao.findAllCurrencies();
+        List<Client> allClients = clientDao.findClients();
+        return new RefDto(allCreditTypes.stream().map(CreditTypeDto::of).collect(Collectors.toList()),
                 allCurrencies.stream().map(CurrencyDto::of).collect(Collectors.toList()),
                 allClients.stream().map(ClientDto::of).collect(Collectors.toList()));
     }

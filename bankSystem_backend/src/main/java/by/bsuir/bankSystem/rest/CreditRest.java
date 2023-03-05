@@ -9,8 +9,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 
-import static by.bsuir.bankSystem.constant.ApiPath.CREDIT;
-import static by.bsuir.bankSystem.constant.ApiPath.DEPOSITS;
+import static by.bsuir.bankSystem.constant.ApiPath.*;
 
 @RestController
 public class CreditRest {
@@ -21,7 +20,7 @@ public class CreditRest {
         this.creditService = creditService;
     }
 
-    @GetMapping(DEPOSITS)
+    @GetMapping(CREDITS)
     public CreditListDto findAll() {
         return creditService.findAll();
     }

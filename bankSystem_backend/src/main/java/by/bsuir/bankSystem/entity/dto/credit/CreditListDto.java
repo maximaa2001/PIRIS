@@ -16,7 +16,7 @@ import java.util.stream.Collectors;
 @Getter
 public class CreditListDto {
 
-    private List<CreditDto> deposits;
+    private List<CreditDto> credits;
 
     public static CreditListDto of(List<Credit> credits) {
         return new CreditListDto(credits.stream().map(CreditDto::miniOf).collect(Collectors.toList()));

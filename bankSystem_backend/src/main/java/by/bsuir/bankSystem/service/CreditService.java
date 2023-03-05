@@ -46,7 +46,7 @@ public class CreditService {
         BankAccount bankCashAccount = bankAccountDao.findBankCashAccount();
         BankAccount bankFondAccount = bankAccountDao.findBankFond();
 
-        bankFondAccount.setDebit(bankCashAccount.getDebit().subtract(deposit.getSum()));
+        bankFondAccount.setDebit(bankFondAccount.getDebit().subtract(deposit.getSum()));
 
         BankAccount currentAccount = createRealAccount(deposit.getSum());
         BankAccount percentAccount = createPercentAccount();

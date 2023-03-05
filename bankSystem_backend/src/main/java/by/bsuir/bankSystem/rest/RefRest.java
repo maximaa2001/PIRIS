@@ -5,8 +5,7 @@ import by.bsuir.bankSystem.service.RefService;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import static by.bsuir.bankSystem.constant.ApiPath.GET_CLIENT_REFERENCES;
-import static by.bsuir.bankSystem.constant.ApiPath.GET_DEPOSIT_REFERENCES;
+import static by.bsuir.bankSystem.constant.ApiPath.*;
 
 @RestController
 public class RefRest {
@@ -24,5 +23,10 @@ public class RefRest {
     @GetMapping(value = GET_DEPOSIT_REFERENCES)
     public RefDto getAllDepositReferences() {
         return refService.getAllDepositReferences();
+    }
+
+    @GetMapping(value = GET_CREDIT_REFERENCES)
+    public RefDto getAllCreditReferences() {
+        return refService.getAllCreditReferences();
     }
 }

@@ -31,7 +31,7 @@ public class CreditDto {
         CreditDto creditDto = new CreditDto();
         creditDto.setSum(credit.getSum().toString());
         creditDto.setPercent(credit.getPercent().toString());
-        creditDto.setCreditName(creditDto.getCreditName());
+        creditDto.setCreditName(credit.getCreditType().getName());
         return creditDto;
     }
 }
