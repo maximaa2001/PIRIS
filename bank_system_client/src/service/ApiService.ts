@@ -1,5 +1,5 @@
 import axios from "axios";
-import { IClientData, IClientsMiniData, ICreditsMiniData, IDepositMiniData, IDepositsMiniData, IRef } from "../model/model";
+import { ICard, IClientData, IClientsMiniData, ICreditMoney, ICreditsMiniData, IDepositMiniData, IDepositsMiniData, INumber, IRef } from "../model/model";
 
 
 
@@ -63,4 +63,16 @@ export async function deleteClient(id : number) {
 
 export async function updateClient(data : IClientData) {
     return (await axios.put("http://localhost:8100/client", data)).data
+}
+
+export async function checkCard(data : ICard) {
+    return (await axios.post("http://localhost:8100/card", data)).data
+}
+
+export async function changeCreditMoney(data : ICreditMoney) {
+    return (await axios.post("http://localhost:8100/changeCreditMoney", data)).data
+}
+
+export async function getCreditMoneyApi(data : INumber) {
+    return (await axios.post("http://localhost:8100/getCreditMoney", data)).data
 }

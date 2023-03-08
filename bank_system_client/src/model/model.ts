@@ -114,3 +114,17 @@ export interface ICreditsMiniData {
     credits : ICreditMiniData[]
 }
 
+export interface ICard {
+   number : string
+   pin : string
+}
+
+export interface ICreditMoney {
+    number : string
+    money : string
+ }
+
+ export interface INumber {
+    number : string
+ }
+

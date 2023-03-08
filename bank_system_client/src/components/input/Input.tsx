@@ -4,7 +4,7 @@ import s from './Input.module.css'
 interface IInput {
     placeholder : string;
     onChange : (IntrinsicAttributes) => void;
-    onBlur : (IntrinsicAttributes) => void;
+    onBlur? : (IntrinsicAttributes) => void;
     type : string
     name? : string;
     value? : string;
