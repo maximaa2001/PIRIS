@@ -13,4 +13,6 @@ public final class ApiPath {
 
     public static final String CREDIT = "/credit";
     public static final String CREDITS = "/credits";
+
+    public static final String CARD = "/card";
 }
